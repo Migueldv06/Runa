@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Controle - SiVAC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #333;
+            position: relative;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .logo {
+            width: 60px;
+        }
+
+        .title {
+            font-size: 24px;
+            color: #00796b;
+            margin-left: 20px;
+        }
+
+        .logout-button {
+            background: #00796b;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #004b49;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            margin-top: 80px; /* Espaço para o cabeçalho fixo */
+            padding: 20px;
+        }
+
+        .left-column,
+        .right-column {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .left-column {
+            margin-right: 20px;
+        }
+
+        .right-column {
+            margin-left: 20px;
+        }
+
+        .center-column {
+            flex: 2;
+        }
+
+        .user-info,
+        .ppc {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .user-info img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .user-info h2 {
+            margin-bottom: 10px;
+            color: #00796b;
+            font-size: 24px;
+        }
+
+        .user-info p {
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .user-info .edit-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #00796b;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .user-info .edit-link:hover {
+            text-decoration: underline;
+        }
+
+        .uploads-recentes,
+        .verificacao,
+        .contact-info {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .uploads-recentes h2,
+        .verificacao h2,
+        .contact-info h2 {
+            color: #00796b;
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .uploads-recentes ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .uploads-recentes li {
+            background: #e0f2f1;
+            border: 1px solid #b2dfdb;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        .uploads-recentes li span {
+            display: block;
+            color: #00796b;
+            font-weight: bold;
+        }
+
+        .verificacao p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .progress-container {
+            background: #e0f2f1;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 10px 0;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 30px; /* Barra mais quadrada */
+            background: #00796b;
+            width: 60%; /* Exemplo de progresso, pode ser ajustado dinamicamente */
+            transition: width 0.3s;
+            position: relative;
+            border-radius: 4px; /* Bordas levemente arredondadas */
+        }
+
+        .progress-info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .progress-details {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .download-button {
+            display: inline-block;
+            background: #00796b;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .download-button:hover {
+            background-color: #004b49;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 20px;
+            font-weight: bold;
+            color: #00796b;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-column,
+            .right-column {
+                margin: 0;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="img/logo-instituto-federal.png" alt="Logo Instituto Federal" class="logo">
+        <div class="title">Sistema de Validação de Atividades Complementares - SiVAC</div>
+        <a href="index.html" class="logout-button">Sair</a>
+    </header>
+    <div class="container">
+        <!-- Lado Esquerdo: Download do PPC -->
+        <div class="left-column">
+            <div class="ppc">
+                <h2>Projeto Pedagógico do Curso (PPC)</h2>
+                <p>O Projeto Pedagógico do Curso (PPC) é um documento importante que define a estrutura do curso, incluindo objetivos, disciplinas e outras informações relevantes.</p>
+                <p>Para visualizar o PPC atual, consulte o documento disponibilizado.</p>
+                <p>Se precisar fazer alterações ou enviar novos documentos, entre em contato com a coordenação.</p>
+                <a href="docs/ppc-regente.pdf" class="download-button" download>Baixar Documento PPC</a>
+            </div>
+        </div>
+
+        <!-- Lado Central -->
+        <div class="center-column">
+            <!-- Barra de Progresso -->
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 60%;">
+                    <div class="progress-info">60%</div>
+                </div>
+                <div class="progress-details">Horas totais completadas: 85/100</div>
+            </div>
+
+            <!-- Mensagem de Boas-Vindas -->
+            <div class="welcome-message">
+                Bem-vindo, Gabriel!
+            </div>
+
+            <!-- Uploads Recentes -->
+            <div class="uploads-recentes">
+                <h2>Uploads Recentes</h2>
+                <ul>
+                    <li><span>ID: 12345</span>Palestra sobre Inovação - 10/08/2024</li>
+                    <li><span>ID: 12346</span>Workshop de Tecnologias - 05/08/2024</li>
+                    <li><span>ID: 12347</span>Curso de Desenvolvimento - 01/08/2024</li>
+                </ul>
+            </div>
+
+            <!-- Verificação de Atividades -->
+            <div class="verificacao">
+                <h2>Verificar Andamento de Avaliação de Atividades Complementares</h2>
+                <p>Confira o status das suas atividades complementares e acompanhe o andamento da validação.</p>
+                <!-- Adicione informações ou links para verificar o andamento -->
+            </div>
+            <!-- Contato com a Coordenação -->
+            <div class="contact-info">
+                <h2>Contato com a Coordenação</h2>
+                <p>Para qualquer dúvida ou informação adicional, entre em contato com a coordenação pelo e-mail <a href="mailto:coordenacao@institutofederal.edu.br">coordenacao@institutofederal.edu.br</a> ou pelo telefone (11) 1234-5678.</p>
+            </div>
+        </div>
+
+        <!-- Lado Direito: Dados Pessoais -->
+        <div class="right-column">
+            <div class="user-info">
+                <h2>Dados Pessoais</h2>
+                <p><strong>Nome:</strong> Gabriel Correa</p>
+                <p><strong>Email:</strong> ixekakaka@institutofederal.edu.br</p>
+                <p><strong>Endereço:</strong> Rua Exemplo, 123, Curitobas, PR</p>
+                <p><strong>Turma:</strong> INFO21</p>
+                <p><strong>Turno:</strong> Matutino</p>
+                <p><strong>Número de Matrícula:</strong> 2024123456</p>
+                <a href="editar-dados.html" class="edit-link">Visualizar, Adicionar e/ou Editar Dados Pessoais</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
