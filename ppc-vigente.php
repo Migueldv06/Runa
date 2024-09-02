@@ -94,7 +94,7 @@
     </style>
 </head>
 <body>
-    <a href="index.html"><img src="img/logo-instituto-federal.png" alt="Logo Instituto Federal" class="logo"></a>
+    <a href="index.php"><img src="img/logo-instituto-federal.png" alt="Logo Instituto Federal" class="logo"></a>
     <div class="container">
         <div class="box">
             <h1>PPC Vigente</h1>
@@ -104,7 +104,7 @@
                 <p>Se precisar fazer alterações ou enviar novos documentos, entre em contato com a coordenação.</p>
                 <a href="docs/ppc-regente.pdf" class="download-button" download>Baixar Documento PPC</a>
             </div>
-            <a href="main.html" class="back-link">Voltar</a>
+            <a href="main.php" class="back-link">Voltar</a>
         </div>
     </div>
 </body>

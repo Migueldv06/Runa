@@ -97,13 +97,13 @@
 <body>
     <div class="login-container">
         <div class="login-box">
-            <a href="index.html"><img src="img/logo-instituto-federal.png" alt="Logo Instituto Federal" class="logo"></a>
+            <a href="index.php"><img src="img/logo-instituto-federal.png" alt="Logo Instituto Federal" class="logo"></a>
             <h1>Esqueci a Senha</h1>
             <p>Para redefinir sua senha, insira o e-mail associado à sua conta. Você receberá um link para criar uma nova senha.</p>
             <form action="enviar-link-de-redefinicao.php" method="post">
                 <input type="email" name="email" id="email" placeholder="E-mail" required>
                 <button type="submit">Enviar Link de Redefinição</button>
-                <a href="login.html">Voltar para o Login</a>
+                <a href="login.php">Voltar para o Login</a>
             </form>
         </div>
     </div>

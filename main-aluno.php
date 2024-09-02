@@ -14,10 +14,11 @@
 
         body {
             background: #f0f4f8;
-            color: #333;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            color: #333;
+            position: relative;
         }
 
         .header {
@@ -31,8 +32,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 80px;
             z-index: 1000;
+            height: 80px;
         }
 
         .logo {
@@ -63,96 +64,37 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .main-content {
+        .container {
             display: flex;
-            flex-direction: row;
+            flex: 1;
             margin-top: 80px; /* Espaço para o cabeçalho fixo */
             padding: 20px;
-            gap: 20px;
         }
 
-        .left-column, .right-column {
+        .left-column,
+        .right-column {
             flex: 1;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
         }
 
         .left-column {
-            position: fixed;
-            top: 80px;
-            left: 20px;
-            width: 300px;
+            margin-right: 20px;
         }
 
         .right-column {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            width: 300px;
+            margin-left: 20px;
         }
 
         .center-column {
             flex: 2;
-            margin-left: 340px; /* Espaço para a coluna esquerda fixa */
-            margin-right: 340px; /* Espaço para a coluna direita fixa */
         }
 
+        .user-info,
         .ppc {
             background: #ffffff;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .ppc h2 {
-            color: #00796b;
-            margin-bottom: 15px;
-        }
-
-        .ppc a, .ppc button {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            text-align: center;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .ppc a {
-            background-color: #00796b;
-            color: #ffffff;
-            text-decoration: none;
-        }
-
-        .ppc a:hover {
-            background-color: #004b49;
-        }
-
-        .ppc button {
-            background-color: #00796b;
-            color: #ffffff;
-            border: none;
-        }
-
-        .ppc button:hover {
-            background-color: #004b49;
-        }
-
-        .user-info {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-            position: sticky;
-            top: 80px;
         }
 
         .user-info img {
@@ -185,7 +127,9 @@
             text-decoration: underline;
         }
 
-        .turmas-cadastradas, .actions-area, .contact-info {
+        .uploads-recentes,
+        .verificacao,
+        .contact-info {
             background: #ffffff;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -193,18 +137,22 @@
             margin-bottom: 20px;
         }
 
-        .turmas-cadastradas h2, .actions-area h2, .contact-info h2 {
+        .uploads-recentes h2,
+        .verificacao h2,
+        .contact-info h2 {
             color: #00796b;
             margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        .turmas-cadastradas ul {
+        .uploads-recentes ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
 
-        .turmas-cadastradas li {
+        .uploads-recentes li {
             background: #e0f2f1;
             border: 1px solid #b2dfdb;
             border-radius: 8px;
@@ -212,121 +160,160 @@
             padding: 10px;
         }
 
-        .turmas-cadastradas a {
+        .uploads-recentes li span {
             display: block;
             color: #00796b;
-            text-decoration: none;
+            font-weight: bold;
         }
 
-        .turmas-cadastradas a:hover {
-            text-decoration: underline;
+        .verificacao p {
+            margin-bottom: 10px;
+            font-size: 16px;
         }
 
-        .actions-area button {
-            display: block;
-            width: 100%;
+        .progress-container {
+            background: #e0f2f1;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 10px 0;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 30px; /* Barra mais quadrada */
+            background: #00796b;
+            width: 60%; /* Exemplo de progresso, pode ser ajustado dinamicamente */
+            transition: width 0.3s;
+            position: relative;
+            border-radius: 4px; /* Bordas levemente arredondadas */
+        }
+
+        .progress-info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .progress-details {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .download-button {
+            display: inline-block;
             background: #00796b;
             color: #ffffff;
             border: none;
             border-radius: 8px;
-            padding: 12px;
+            padding: 12px 24px;
             font-size: 16px;
-            text-align: center;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .actions-area button:hover {
-            background-color: #004b49;
-        }
-
-        .contact-info p {
-            font-size: 16px;
-        }
-
-        .contact-info a {
-            color: #00796b;
             text-decoration: none;
+            text-align: center;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
         }
 
-        .contact-info a:hover {
-            text-decoration: underline;
+        .download-button:hover {
+            background-color: #004b49;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 20px;
+            font-weight: bold;
+            color: #00796b;
         }
 
         @media (max-width: 768px) {
-            .main-content {
+            .container {
                 flex-direction: column;
             }
 
-            .left-column, .right-column {
-                position: static;
-                width: 100%;
+            .left-column,
+            .right-column {
                 margin: 0;
-            }
-
-            .center-column {
-                margin: 0;
+                margin-bottom: 20px;
             }
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <a href="index.html"><img src="img/logo-instituto-federal.png" alt="Logo Instituto Federal" class="logo"></a>
+        <a href="index.php"><img src="img/logo-instituto-federal.png" alt="Logo Instituto Federal" class="logo"></a>
         <div class="title">Sistema de Validação de Atividades Complementares - SiVAC</div>
-        <a href="index.html" class="logout-button">Sair</a>
+        <a href="index.php" class="logout-button">Sair</a>
     </header>
-    
-    <div class="main-content">
-        <!-- Lado Esquerdo: PPC -->
+    <div class="container">
+        <!-- Lado Esquerdo: Download do PPC -->
         <div class="left-column">
             <div class="ppc">
                 <h2>Projeto Pedagógico do Curso (PPC)</h2>
                 <p>O Projeto Pedagógico do Curso (PPC) é um documento importante que define a estrutura do curso, incluindo objetivos, disciplinas e outras informações relevantes.</p>
-                <a href="docs/ppc-regente.pdf" download>Baixar Documento PPC</a>
-                <button>Alterar PPC</button>
+                <p>Para visualizar o PPC atual, consulte o documento disponibilizado.</p>
+                <p>Se precisar fazer alterações ou enviar novos documentos, entre em contato com a coordenação.</p>
+                <a href="docs/ppc-regente.pdf" class="download-button" download>Baixar Documento PPC</a>
             </div>
         </div>
 
         <!-- Lado Central -->
         <div class="center-column">
-            <!-- Turmas Cadastradas -->
-            <div class="turmas-cadastradas">
-                <h2>Turmas Cadastradas</h2>
+            <!-- Barra de Progresso -->
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 60%;">
+                    <div class="progress-info">60%</div>
+                </div>
+                <div class="progress-details">Horas totais completadas: 85/100</div>
+            </div>
+
+            <!-- Mensagem de Boas-Vindas -->
+            <div class="welcome-message">
+                Bem-vindo, Gabriel!
+            </div>
+
+            <!-- Uploads Recentes -->
+            <div class="uploads-recentes">
+                <h2>Uploads Recentes</h2>
                 <ul>
-                    <li><a href="#">Turma A - 2024/1</a></li>
-                    <li><a href="#">Turma B - 2024/1</a></li>
-                    <li><a href="#">Turma C - 2024/1</a></li>
+                    <li><span>ID: 12345</span>Palestra sobre Inovação - 10/08/2024</li>
+                    <li><span>ID: 12346</span>Workshop de Tecnologias - 05/08/2024</li>
+                    <li><span>ID: 12347</span>Curso de Desenvolvimento - 01/08/2024</li>
                 </ul>
             </div>
 
-            <!-- Ações Rápidas -->
-            <div class="actions-area">
-                <h2>Ações</h2>
-                <button>Adicionar Seções de Horas Complementares</button>
-                <button>Alterar Nome de uma Turma</button>
-                <button>Adicionar uma Turma</button>
-                <button>Arquivar Turma</button>
+            <!-- Verificação de Atividades -->
+            <div class="verificacao">
+                <h2>Verificar Andamento de Avaliação de Atividades Complementares</h2>
+                <p>Confira o status das suas atividades complementares e acompanhe o andamento da validação.</p>
+                <!-- Adicione informações ou links para verificar o andamento -->
+            </div>
+            <!-- Contato com a Coordenação -->
+            <div class="contact-info">
+                <h2>Contato com a Coordenação</h2>
+                <p>Para qualquer dúvida ou informação adicional, entre em contato com a coordenação pelo e-mail <a href="mailto:coordenacao@institutofederal.edu.br">coordenacao@institutofederal.edu.br</a> ou pelo telefone (11) 1234-5678.</p>
             </div>
         </div>
 
-        <!-- Lado Direito: Dados Pessoais e Contato -->
+        <!-- Lado Direito: Dados Pessoais -->
         <div class="right-column">
             <div class="user-info">
                 <h2>Dados Pessoais</h2>
                 <p><strong>Nome:</strong> Gabriel Correa</p>
                 <p><strong>Email:</strong> ixekakaka@institutofederal.edu.br</p>
                 <p><strong>Endereço:</strong> Rua Exemplo, 123, Curitobas, PR</p>
-                <p><strong>Curso:</strong> Engenharia de Computação</p>
+                <p><strong>Turma:</strong> INFO21</p>
+                <p><strong>Turno:</strong> Matutino</p>
                 <p><strong>Número de Matrícula:</strong> 2024123456</p>
-                <a href="editar-dados.html" class="edit-link">Visualizar, Adicionar e/ou Editar Dados Pessoais</a>
-            </div>
-
-            <!-- Contato com a Coordenação -->
-            <div class="contact-info">
-                <h2>Contato com a Coordenação</h2>
-                <p>Para qualquer dúvida ou informação adicional, entre em contato com a coordenação pelo e-mail <a href="mailto:coordenacao@institutofederal.edu.br">coordenacao@institutofederal.edu.br</a> ou pelo telefone (11) 1234-5678.</p>
+                <a href="editar-dados.php" class="edit-link">Visualizar, Adicionar e/ou Editar Dados Pessoais</a>
             </div>
         </div>
     </div>

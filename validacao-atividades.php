@@ -111,7 +111,7 @@
     </style>
 </head>
 <body>
-    <a href="index.html"><img src="img/logo-instituto-federal.png" alt="Logo Instituto Federal" class="logo"></a>
+    <a href="index.php"><img src="img/logo-instituto-federal.png" alt="Logo Instituto Federal" class="logo"></a>
     <div class="container">
         <div class="box">
             <h1>Validação de Atividades Complementares</h1>
@@ -137,7 +137,7 @@
                 </div>
                 <button type="submit" class="submit-button">Validar</button>
             </form>
-            <a href="main.html" class="back-link">Voltar</a>
+            <a href="main.php" class="back-link">Voltar</a>
         </div>
     </div>
 </body>
