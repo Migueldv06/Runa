@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pré-Cadastro Discente - SiVAC</title>
+    <title>Editar Cadastro do Discente - SiVAC</title>
     <style>
         * {
             margin: 0;
@@ -120,7 +120,7 @@
 
     <div class="container">
         <div class="form-container">
-            <h1>Pré-Cadastro de Discente</h1>
+            <h1>Editar Cadastro do Discente</h1>
             <form id="preCadastroForm" onsubmit="return validateForm()">
                 <label for="nome">Nome Completo:</label>
                 <input type="text" id="nome" name="nome" placeholder="Nome Completo" required>
