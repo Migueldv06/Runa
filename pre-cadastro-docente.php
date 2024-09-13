@@ -190,24 +190,10 @@
             // Clear previous errors
             document.querySelectorAll('.error').forEach(e => e.textContent = '');
 
-            // Nome
-            const nome = document.getElementById('nome').value.trim();
-            if (nome === '') {
-                document.getElementById('nomeError').textContent = 'O nome completo é obrigatório.';
-                valid = false;
-            }
-
             // Matrícula
             const matricula = document.getElementById('matricula').value.trim();
             if (matricula === '') {
                 document.getElementById('matriculaError').textContent = 'O número de matrícula é obrigatório.';
-                valid = false;
-            }
-
-            // CPF
-            const cpf = document.getElementById('cpf').value.trim();
-            if (cpf === '') {
-                document.getElementById('cpfError').textContent = 'O número de CPF é obrigatório.';
                 valid = false;
             }
 
@@ -221,24 +207,12 @@
                 valid = false;
             }
 
-            // Telefone (opcional)
-            const telefone = document.getElementById('telefone').value.trim();
-            if (telefone !== '' && !validatePhone(telefone)) {
-                document.getElementById('telefoneError').textContent = 'O número de telefone fornecido não é válido.';
-                valid = false;
-            }
-
             return valid;
         }
 
         function validateEmail(email) {
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return re.test(email);
-        }
-
-        function validatePhone(phone) {
-            const re = /^\d{10,11}$/; // Exemplo de validação para números de telefone (10 ou 11 dígitos)
-            return re.test(phone);
         }
     </script>
 </body>
