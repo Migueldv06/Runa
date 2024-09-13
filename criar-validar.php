@@ -88,15 +88,15 @@
 <body>
     <div class="container">
         <div class="box">
-            <a href="index.html"><img src="img/Runa.png" alt="Logo Runas" class="logo"></a> 
+            <a href="index.php"><img src="img/Runa.png" alt="Logo Runas" class="logo"></a> 
             <h1>Opções de Cadastro e Validação</h1>
             <div class="options">
-                <a href="pre-cadastro-docente.html" class="option-button">Criar pré-cadastro de docente</a> 
-                <a href="val-pre-cad-doc.html" class="option-button">Validar pré-cadastro docente</a> 
-                <a href="pre-cadastro-discente.html" class="option-button">Criar pré-cadastro de discente</a> 
-                <a href="val-pre-cad-disc.html" class="option-button">Validar pré-cadastro de discente</a> 
+                <a href="pre-cadastro-docente.php" class="option-button">Criar pré-cadastro de docente</a> 
+                <a href="val-pre-cad-doc.php" class="option-button">Validar pré-cadastro docente</a> 
+                <a href="pre-cadastro-discente.php" class="option-button">Criar pré-cadastro de discente</a> 
+                <a href="val-pre-cad-disc.php" class="option-button">Validar pré-cadastro de discente</a> 
             </div>
-            <a href="index.html" class="back-link">Voltar ao login</a> 
+            <a href="index.php" class="back-link">Voltar ao login</a> 
         </div>
     </div>
 </body>

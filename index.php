@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esqueci a Senha - Sistema HC</title>
+    <title>Sistema HC - Login</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif; /* Fonte ajustada */
+            font-family: Arial, sans-serif;
         }
 
         body {
@@ -47,13 +47,24 @@
             font-weight: bold;
         }
 
-        .login-box p {
+        .subtitle {
             color: #00796b; /* Verde escuro institucional */
             margin-bottom: 30px;
             font-size: 16px;
         }
 
-        .login-box input[type="email"] {
+        .subtitle a {
+            color: #004b49; /* Azul escuro institucional para links */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .subtitle a:hover {
+            text-decoration: underline;
+        }
+
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
             width: 100%;
             padding: 15px;
             margin-bottom: 20px;
@@ -97,13 +108,14 @@
 <body>
     <div class="login-container">
         <div class="login-box">
-            <a href="index.html"><img src="img/Runa.png" alt="Logo Runas" class="logo"></a>
-            <h1>Esqueci a Senha</h1>
-            <p>Para redefinir sua senha, insira o e-mail associado à sua conta. Você receberá um link para criar uma nova senha.</p>
-            <form action="enviar-link-de-redefinicao.php" method="post">
-                <input type="email" name="email" id="email" placeholder="E-mail" required>
-                <button type="submit">Enviar Link de Redefinição</button>
-                <a href="login.html">Voltar para o Login</a>
+            <img src="img/Runa.png" alt="Logo Runas" class="logo">
+            <h1>Login</h1>
+            <p class="subtitle">Acesse sua conta ou <a href="criar-validar.php">crie uma nova</a></p>
+            <form action="" method="post">
+                <input type="text" name="username" id="username" placeholder="Usuário">
+                <input type="password" name="password" id="password" placeholder="Senha">
+                <button type="submit">Entrar</button>
+                <a href="esqueci-senha.php">Esqueci minha senha</a>
             </form>
         </div>
     </div>

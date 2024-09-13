@@ -249,9 +249,9 @@
 </head>
 <body>
     <header class="header">
-        <a href="index.html"><img src="img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
+        <a href="index.php"><img src="img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
         <div class="title">Sistema de Registro Unificado de Normativas de Atividades Suplementares - RUNAS</div>
-        <a href="index.html" class="logout-button">Sair</a>
+        <a href="index.php" class="logout-button">Sair</a>
     </header>
     <div class="container">
         <!-- Lado Esquerdo: Download do PPC -->

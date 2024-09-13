@@ -135,7 +135,7 @@
 </head>
 <body>
     <header class="header">
-        <a href="index.html"><img src="img/Runa.png" alt="Logo Runas" class="logo"></a>
+        <a href="index.php"><img src="img/Runa.png" alt="Logo Runas" class="logo"></a>
         <div class="title">Sistema de Registro Unificado de Normativas de Atividades Suplementares - RUNAS</div>
     </header>
 

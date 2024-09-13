@@ -109,7 +109,7 @@
 
 <body>
     <div class="container">
-        <img src="img/logo-instituto-federal.png" alt="Logo Instituto Federal" class="logo">
+        <img src="img/Runa.png" alt="Logo Instituto Runas" class="logo">
         <h1>Pré-Cadastro de Docente</h1>
         <form action="processar-pre-cadastro.php" method="post">
             <div class="form-group">
