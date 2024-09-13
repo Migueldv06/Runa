@@ -11,7 +11,7 @@
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
-
+        
         body {
             background: #f0f4f8;
             display: flex;
@@ -46,6 +46,15 @@
             flex: 1;
             flex-direction: column;
             margin: 20px;
+            text-align: center;
+        }
+        .container h1 {
+            color: #00796b;
+            margin-bottom: 20px;
+        }
+        .container img.logo {
+            width: 120px;
+            margin-bottom: 20px;
         }
 
         .form-container {
@@ -70,9 +79,7 @@
         }
 
         .form-container input[type="text"],
-        .form-container input[type="email"],
-        .form-container input[type="tel"],
-        .form-container input[type="number"] {
+        .form-container input[type="email"] {
             width: 100%;
             padding: 12px;
             margin-bottom: 15px;
@@ -110,6 +117,43 @@
             margin-top: -10px;
             margin-bottom: 15px;
         }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            background-color: #00796b;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .buttons button:hover {
+            background-color: #004b49;
+        }
+
+        .buttons a {
+            display: inline-block;
+            text-decoration: none;
+            color: #00796b;
+            background-color: #e0f2f1;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            line-height: 1;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .buttons a:hover {
+            background-color: #b2dfdb;
+        }
     </style>
 </head>
 <body>
@@ -120,30 +164,22 @@
 
     <div class="container">
         <div class="form-container">
-            <h1>Pré-Cadastro de Docente</h1>
-            <form id="preCadastroForm" onsubmit="return validateForm()">
-                <label for="nome">Nome Completo:</label>
-                <input type="text" id="nome" name="nome" placeholder="Nome Completo" required>
-                <span class="error" id="nomeError"></span>
-
+        <img src="img/Runa.png" alt="Logo Instituto Runas" class="logo">
+        <h1>Pré-Cadastro de Docente</h1>
+        <form action="processar-pre-cadastro.php" method="post">
+            <div class="form-group">
                 <label for="matricula">Número de Matrícula:</label>
-                <input type="number" id="matricula" name="matricula" placeholder="Número de Matrícula" required>
-                <span class="error" id="matriculaError"></span>
-
-                <label for="cpf">Número de CPF:</label>
-                <input type="text" id="cpf" name="cpf" placeholder="Número de CPF" required>
-                <span class="error" id="cpfError"></span>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Email" required>
-                <span class="error" id="emailError"></span>
-
-                <label for="telefone">Número de Telefone (Opcional):</label>
-                <input type="tel" id="telefone" name="telefone" placeholder="Número de Telefone">
-                <span class="error" id="telefoneError"></span>
-
-                <button type="submit">Submeter</button>
-            </form>
+                <input type="text" id="matricula" name="matricula" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="buttons">
+                <button type="submit">Cadastrar</button>
+                <a href="index.php">Voltar</a>
+            </div>
+        </form>
         </div>
     </div>
 
