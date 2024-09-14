@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema HC - Login</title>
+    <link rel="shortcut icon" href="img/nome-da-imagem.extrensao">
     <style>
         * {
             margin: 0;
