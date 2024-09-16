@@ -1,116 +1,47 @@
+<?php
+include 'config.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nome = $_POST['nome'];
+    $matricula = $_POST['matricula'];
+    $cpf = $_POST['cpf'];
+    $email = $_POST['email'];
+    $telefone = isset($_POST['telefone']) ? $_POST['telefone'] : NULL;
+
+    $nome = $DB->real_escape_string($nome);
+    $matricula = $DB->real_escape_string($matricula);
+    $cpf = $DB->real_escape_string($cpf);
+    $email = $DB->real_escape_string($email);
+    $telefone = $telefone ? $DB->real_escape_string($telefone) : NULL;
+
+    $check_sql = "SELECT * FROM Discente WHERE cpf = '$cpf' OR matricula = '$matricula'";
+    $result = $DB->query($check_sql);
+
+    if ($result->num_rows > 0) {
+        echo "CPF ou matrícula já cadastrados!";
+    } else {
+        $sql = "INSERT INTO Discente (nomeDiscente, matricula, cpf, email, telefone)
+                VALUES ('$nome', '$matricula', '$cpf', '$email', '$telefone')";
+
+        if ($DB->query($sql) === TRUE) {
+            echo "Pré-cadastro realizado com sucesso!";
+        } else {
+            echo "Erro: " . $sql . "<br>" . $DB->error;
+        }
+    }
+
+    // Fechar a conexão
+    $DB->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pré-Cadastro Discente - SiVAC</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #f0f4f8;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .header {
-            background: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 80px;
-            z-index: 1000;
-        }
-
-        .logo {
-            width: 60px;
-        }
-
-        .title {
-            font-size: 24px;
-            color: #00796b;
-            margin-left: 20px;
-        }
-
-        .container {
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-            margin: 20px;
-        }
-
-        .form-container {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .form-container h1 {
-            color: #00796b;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        .form-container label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .form-container input[type="text"],
-        .form-container input[type="email"],
-        .form-container input[type="tel"],
-        .form-container input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .form-container button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            background-color: #00796b;
-            color: #ffffff;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .form-container button:hover {
-            background-color: #004d40;
-        }
-
-        .form-container .optional {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .form-container .error {
-            color: red;
-            font-size: 14px;
-            margin-top: -10px;
-            margin-bottom: 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles/pre-cadastro-discente.css">
 </head>
 <body>
     <header class="header">
@@ -121,7 +52,7 @@
     <div class="container">
         <div class="form-container">
             <h1>Pré-Cadastro de Discente</h1>
-            <form id="preCadastroForm" onsubmit="return validateForm()">
+            <form id="preCadastroForm" method="POST" action="pre-cadastro-discente.php" onsubmit="return validateForm()">
                 <label for="nome">Nome Completo:</label>
                 <input type="text" id="nome" name="nome" placeholder="Nome Completo" required>
                 <span class="error" id="nomeError"></span>

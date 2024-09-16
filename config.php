@@ -1,13 +1,14 @@
 <?php
 $servername = "localhost";
-$username = "Runa";
+$username = "runas";
 $password = "#Migueldv1";
-$dbname = "sistema_hc";
+$dbname = "runas";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Criar conexão
+$DB = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar a conexão
-if ($conn->connect_error) {
-    die("Falha na conexão com o banco de dados: " . $conn->connect_error);
+// Verificar conexão
+if ($DB->connect_error) {
+    die("Conexão falhou: " . $DB->connect_error);
 }
 ?>
