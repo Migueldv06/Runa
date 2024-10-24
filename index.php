@@ -19,7 +19,7 @@ if (isset($_POST["email"]) && isset($_POST["senha"])) {
 
         if ($result_discente->num_rows == 1) {
             $usuario = $result_discente->fetch_assoc();
-            if (isset($_SESSION)) {
+            if (!isset($_SESSION)) {
                 session_start();
             }
 
@@ -31,7 +31,7 @@ if (isset($_POST["email"]) && isset($_POST["senha"])) {
             exit();
         } elseif ($result_docente->num_rows == 1) {
             $usuario = $result_docente->fetch_assoc();
-            if (isset($_SESSION)){
+            if (!isset($_SESSION)){
                 session_start();
             }
             $_SESSION['id'] = $usuario['id'];

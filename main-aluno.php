@@ -1,4 +1,21 @@
 <?php 
+include "protect-discente.php";
+include "config.php";   // Inclui a conexão com o banco de dados
+
+// Recupera o ID do usuário da sessão
+$id = $_SESSION['id'];
+
+// Consulta as informações do discente
+$sql = "SELECT nome, email, matricula, turma, turno, endereco FROM discente WHERE id = '$id'";
+$result = $DB->query($sql) or die("Falha na execução do MySQL: " . $DB->error);
+
+// Verifica se o usuário foi encontrado
+if ($result->num_rows > 0) {
+    $usuario = $result->fetch_assoc();  // Armazena os dados do usuário em um array
+} else {
+    echo "Usuário não encontrado.";
+    exit();
+}
 
 ?>
 <!DOCTYPE html>
@@ -254,7 +271,7 @@
     <header class="header">
         <a href="index.php"><img src="img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
         <div class="title">Sistema de Registro Unificado de Normativas de Atividades Suplementares - RUNAS</div>
-        <a href="index.php" class="logout-button">Sair</a>
+        <a href="logout.php" class="logout-button">Sair</a>
     </header>
     <div class="container">
         <!-- Lado Esquerdo: Download do PPC -->
@@ -310,12 +327,12 @@
         <div class="right-column">
             <div class="user-info">
                 <h2>Dados Pessoais</h2>
-                <p><strong>Nome:</strong> Gabriel Correa</p>
-                <p><strong>Email:</strong> ixekakaka@institutofederal.edu.br</p>
-                <p><strong>Endereço:</strong> Rua Exemplo, 123, Curitobas, PR</p>
-                <p><strong>Turma:</strong> INFO21</p>
-                <p><strong>Turno:</strong> Matutino</p>
-                <p><strong>Número de Matrícula:</strong> 2024123456</p>
+                <p><strong>Nome:</strong> <?php echo $usuario['nome']; ?></p>
+                <p><strong>Email:</strong> <?php echo $usuario['email']; ?></p>
+                <p><strong>Endereço:</strong> <?php echo $usuario['endereco']; ?></p>
+                <p><strong>Turma:</strong> <?php echo $usuario['turma']; ?></p>
+                <p><strong>Turno:</strong> <?php echo $usuario['turno']; ?></p>
+                <p><strong>Número de Matrícula:</strong> <?php echo $usuario['matricula']; ?></p>
                 <a href="editar-dados.php" class="edit-link">Visualizar, Adicionar e/ou Editar Dados Pessoais</a>
             </div>
         </div>
