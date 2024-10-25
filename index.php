@@ -1,5 +1,15 @@
 <?php
 include "config.php";
+session_start();
+if (isset($_SESSION['tipo'])) {
+    if ($_SESSION['tipo'] == 'discente') {
+        header("Location: discente/main.php");
+        exit();
+    } elseif ($_SESSION['tipo'] == 'docente') {
+        header("Location: docente/main.php");
+        exit();
+    }
+}
 if (isset($_POST["email"]) && isset($_POST["senha"])) {
     if (strlen($_POST["email"]) == 0) {
         echo "Preencha seu E-mail";
@@ -31,7 +41,7 @@ if (isset($_POST["email"]) && isset($_POST["senha"])) {
             exit();
         } elseif ($result_docente->num_rows == 1) {
             $usuario = $result_docente->fetch_assoc();
-            if (!isset($_SESSION)){
+            if (!isset($_SESSION)) {
                 session_start();
             }
             $_SESSION['id'] = $usuario['id'];
