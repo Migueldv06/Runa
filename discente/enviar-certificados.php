@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include "../config.php";
 include "protect-discente.php";
 
@@ -17,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verifica se o arquivo foi carregado sem erros
     if ($arquivo['error'] === UPLOAD_ERR_OK) {
-        $nomeArquivo = basename($arquivo['name']);
+        $extensao = pathinfo($arquivo['name'], PATHINFO_EXTENSION);
+        $nomeArquivo = pathinfo($arquivo['name'], PATHINFO_FILENAME) . "_" . time() . "." . $extensao;
         $diretorioDestino = '../atividades/' . $nomeArquivo;
 
         // Move o arquivo para o diretório de uploads

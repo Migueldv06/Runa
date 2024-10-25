@@ -2,9 +2,46 @@
 include "../config.php";
 include "protect-discente.php";
 
+$id = $_SESSION['id'];
+$sql = "SELECT * FROM discente WHERE id='$id'";
+$result = $DB->query($sql) or die("Falha na execução do MySQL: " . $DB->error);
+
+// Verifica se o usuário foi encontrado
+if ($result->num_rows > 0) {
+    $usuario = $result->fetch_assoc();  // Armazena os dados do usuário em um array
+} else {
+    echo "Usuário não encontrado.";
+    exit();
+}
+
+// Processa a atualização do formulário
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nome = $_POST['nome'];
+    $matricula = $_POST['matricula'];
+    $cpf = $_POST['cpf'];
+    $email = $_POST['email'];
+    $endereco = $_POST['endereco'];
+    $turno = $_POST['turno'];
+    $turma = $_POST['turma'];
+    $telefone = $_POST['telefone'];
+
+    // Query para atualizar os dados do usuário no banco de dados
+    $updateSql = "UPDATE discente SET nome=?, matricula=?, cpf=?, email=?, endereco=?, turno=?, turma=?, telefone=? WHERE id=?";
+    $stmt = $DB->prepare($updateSql);
+    $stmt->bind_param("sissssssi", $nome, $matricula, $cpf, $email, $endereco, $turno, $turma, $telefone, $id);
+
+    if ($stmt->execute()) {
+        echo "<p>Dados atualizados com sucesso!</p>";
+        // Atualiza os dados exibidos sem recarregar a página
+        header("Refresh:0");
+    } else {
+        echo "<p>Erro ao atualizar os dados.</p>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,6 +113,9 @@ include "protect-discente.php";
 
         .form-container input[type="text"],
         .form-container input[type="email"],
+        .form-container input[type="endereco"],
+        .form-container input[type="turno"],
+        .form-container input[type="turma"],
         .form-container input[type="tel"],
         .form-container input[type="number"] {
             width: 100%;
@@ -117,6 +157,7 @@ include "protect-discente.php";
         }
     </style>
 </head>
+
 <body>
     <header class="header">
         <a href="../index.php"><img src="../img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
@@ -126,25 +167,37 @@ include "protect-discente.php";
     <div class="container">
         <div class="form-container">
             <h1>Editar Cadastro do Discente</h1>
-            <form id="preCadastroForm" onsubmit="return validateForm()">
+            <form id="preCadastroForm" onsubmit="return validateForm()" method="post">
                 <label for="nome">Nome Completo:</label>
-                <input type="text" id="nome" name="nome" placeholder="Nome Completo" required>
+                <input type="text" id="nome" name="nome" placeholder="Nome Completo" value="<?php echo $usuario['nome'] ?>" required>
                 <span class="error" id="nomeError"></span>
 
                 <label for="matricula">Número de Matrícula:</label>
-                <input type="number" id="matricula" name="matricula" placeholder="Número de Matrícula" required>
+                <input type="number" id="matricula" name="matricula" placeholder="Número de Matrícula" value="<?php echo $usuario['matricula'] ?>" required>
                 <span class="error" id="matriculaError"></span>
 
                 <label for="cpf">Número de CPF:</label>
-                <input type="text" id="cpf" name="cpf" placeholder="Número de CPF" required>
+                <input type="text" id="cpf" name="cpf" placeholder="Número de CPF" value="<?php echo $usuario['cpf'] ?>" required>
                 <span class="error" id="cpfError"></span>
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Email" required>
+                <input type="email" id="email" name="email" placeholder="Email" value="<?php echo $usuario['email'] ?>" required>
                 <span class="error" id="emailError"></span>
 
+                <label for="endereco">Endereço:</label>
+                <input type="endereco" id="endereco" name="endereco" placeholder="Endereço" value="<?php echo $usuario['endereco'] ?>">
+                <span class="error" id="enderecoError"></span>
+
+                <label for="turno">Turno:</label>
+                <input type="turno" id="turno" name="turno" placeholder="Turno" value="<?php echo $usuario['turno'] ?>">
+                <span class="error" id="turnoError"></span>
+
+                <label for="turma">Turma:</label>
+                <input type="turma" id="turma" name="turma" placeholder="Turma" value="<?php echo $usuario['turma'] ?>">
+                <span class="error" id="turmaError"></span>
+
                 <label for="telefone">Número de Telefone (Opcional):</label>
-                <input type="tel" id="telefone" name="telefone" placeholder="Número de Telefone">
+                <input type="tel" id="telefone" name="telefone" placeholder="Número de Telefone" value="<?php echo $usuario['telefone'] ?>">
                 <span class="error" id="telefoneError"></span>
 
                 <button type="submit">Submeter</button>
@@ -211,4 +264,5 @@ include "protect-discente.php";
         }
     </script>
 </body>
+
 </html>
