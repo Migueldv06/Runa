@@ -1,5 +1,48 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include "../config.php";
+include "protect-discente.php";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $nome = $_POST['nome-atividade'];
+    $horas = intval($_POST['horas-atividade']);
+    $categoria = $_POST['categoria'];
+    $arquivo = $_FILES['certificado'];
+    $discente_id = $_SESSION['id'];
+    $status = 'Pendente'; // Status inicial
+
+    // Verifica se o arquivo foi carregado sem erros
+    if ($arquivo['error'] === UPLOAD_ERR_OK) {
+        $nomeArquivo = basename($arquivo['name']);
+        $diretorioDestino = '../atividades/' . $nomeArquivo;
+
+        // Move o arquivo para o diretório de uploads
+        if (move_uploaded_file($arquivo['tmp_name'], $diretorioDestino)) {
+            // Inserir os dados no banco de dados
+            $sql = "INSERT INTO atividades (nome, caminho_arquivo, tipo, horas_atividade, discente_id, status, data_upload) VALUES (?, ?, ?, ?, ?, ?, NOW())";
+            $stmt = $DB->prepare($sql);
+            $stmt->bind_param("ssssis", $nome, $diretorioDestino, $categoria, $horas, $discente_id, $status);
+
+            if ($stmt->execute()) {
+                echo "<p>Atividade enviada com sucesso!</p>";
+            } else {
+                echo "<p>Erro ao salvar no banco de dados.</p>";
+            }
+        } else {
+            echo "<p>Erro ao mover o arquivo.</p>";
+        }
+    } else {
+        echo "<p>Erro no upload do arquivo.</p>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +69,8 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            width: 80px; /* Tamanho menor da logomarca */
+            width: 80px;
+            /* Tamanho menor da logomarca */
         }
 
         .container {
@@ -110,6 +154,7 @@
         }
     </style>
 </head>
+
 <body>
     <a href="../index.php"><img src="../img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
     <div class="container">
@@ -117,8 +162,12 @@
             <h1>Envio de Atividades Complementares</h1>
             <form action="#" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="atividade">ID da Atividade</label>
-                    <input type="text" id="atividade" name="atividade" placeholder="ID da Atividade" required>
+                    <label for="nome-atividade">Nome da Atividade</label>
+                    <input type="text" id="nome-atividade" name="nome-atividade" placeholder="Nome da Atividade" required>
+                </div>
+                <div class="form-group">
+                    <label for="horas-atividade">Horas da Atividade</label>
+                    <input type="text" id="horas-atividade" name="horas-atividade" placeholder="Horas da Atividade" required>
                 </div>
                 <div class="form-group">
                     <label for="categoria">Categoria da Atividade</label>
@@ -135,10 +184,11 @@
                     <label for="certificado">Upload do Certificado</label>
                     <input type="file" id="certificado" name="certificado" accept=".pdf,.jpg,.jpeg,.png" required>
                 </div>
-                <button type="submit" class="submit-button">Validar</button>
+                <button type="submit" class="submit-button">Enviar</button>
+                <button type="main.php" class="submit-button">Voltar</button>
             </form>
-            <a href="main.php" class="back-link">Voltar</a>
         </div>
     </div>
 </body>
+
 </html>
