@@ -37,7 +37,7 @@ if (isset($_POST["email"]) && isset($_POST["senha"])) {
             $_SESSION['nome'] = $usuario['nome'];
             $_SESSION['tipo'] = 'discente';
 
-            header("Location: main-aluno.php");
+            header("Location: discente/main.php");
             exit();
         } elseif ($result_docente->num_rows == 1) {
             $usuario = $result_docente->fetch_assoc();
@@ -48,7 +48,7 @@ if (isset($_POST["email"]) && isset($_POST["senha"])) {
             $_SESSION['nome'] = $usuario['nome'];
             $_SESSION['tipo'] = 'docente';
 
-            header("Location: main-docente.php"); // Redireciona para a tela de docentes
+            header("Location: docente/main.php"); // Redireciona para a tela de docentes
             exit(); // Para o script após o redirecionamento
         } else {
             echo "Falha ao logar, email ou senha errados";

@@ -1,24 +1,30 @@
 <?php
 include "protect-docente.php";
-include "config.php";   // Inclui a conexão com o banco de dados
+include "../config.php";   // Inclui a conexão com o banco de dados
 
 // Recupera o ID do usuário da sessão
 $id = $_SESSION['id'];
 
 // Consulta as informações do discente
-$sql = "SELECT nome, email, matricula, curso, endereco FROM docente WHERE id = '$id'";
-$result = $DB->query($sql) or die("Falha na execução do MySQL: " . $DB->error);
+$sqlDocente = "SELECT nome, email, matricula, curso, endereco FROM docente WHERE id = '$id'";
+$resultDocente = $DB->query($sqlDocente) or die("Falha na execução do MySQL: " . $DB->error);
 
 // Verifica se o usuário foi encontrado
-if ($result->num_rows > 0) {
-    $usuario = $result->fetch_assoc();  // Armazena os dados do usuário em um array
+if ($resultDocente->num_rows > 0) {
+    $docente = $resultDocente->fetch_assoc();  // Armazena os dados do usuário em um array
 } else {
     echo "Usuário não encontrado.";
     exit();
 }
+// Consulta as turmas cadastradas
+$sqlTurmas = "SELECT turma.id, turma.nome AS turma_nome, curso.nome AS curso_nome 
+              FROM turma
+              LEFT JOIN curso ON turma.curso = curso.id"; // Relacionando a tabela curso para mostrar o nome do curso
+$resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->error);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,12 +91,14 @@ if ($result->num_rows > 0) {
         .main-content {
             display: flex;
             flex-direction: row;
-            margin-top: 80px; /* Espaço para o cabeçalho fixo */
+            margin-top: 80px;
+            /* Espaço para o cabeçalho fixo */
             padding: 20px;
             gap: 20px;
         }
 
-        .left-column, .right-column {
+        .left-column,
+        .right-column {
             flex: 1;
             background: #ffffff;
             border-radius: 12px;
@@ -114,8 +122,10 @@ if ($result->num_rows > 0) {
 
         .center-column {
             flex: 2;
-            margin-left: 340px; /* Espaço para a coluna esquerda fixa */
-            margin-right: 340px; /* Espaço para a coluna direita fixa */
+            margin-left: 340px;
+            /* Espaço para a coluna esquerda fixa */
+            margin-right: 340px;
+            /* Espaço para a coluna direita fixa */
         }
 
         .ppc {
@@ -131,7 +141,8 @@ if ($result->num_rows > 0) {
             margin-bottom: 15px;
         }
 
-        .ppc a, .ppc button {
+        .ppc a,
+        .ppc button {
             display: block;
             width: 100%;
             padding: 12px;
@@ -204,7 +215,9 @@ if ($result->num_rows > 0) {
             text-decoration: underline;
         }
 
-        .turmas-cadastradas, .actions-area, .contact-info {
+        .turmas-cadastradas,
+        .actions-area,
+        .contact-info {
             background: #ffffff;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -212,7 +225,9 @@ if ($result->num_rows > 0) {
             margin-bottom: 20px;
         }
 
-        .turmas-cadastradas h2, .actions-area h2, .contact-info h2 {
+        .turmas-cadastradas h2,
+        .actions-area h2,
+        .contact-info h2 {
             color: #00796b;
             margin-bottom: 15px;
         }
@@ -256,6 +271,21 @@ if ($result->num_rows > 0) {
             transition: background-color 0.3s;
         }
 
+        .actions-area a {
+            display: block;
+            width: 100%;
+            background: #00796b;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
         .actions-area button:hover {
             background-color: #004b49;
         }
@@ -278,7 +308,8 @@ if ($result->num_rows > 0) {
                 flex-direction: column;
             }
 
-            .left-column, .right-column {
+            .left-column,
+            .right-column {
                 position: static;
                 width: 100%;
                 margin: 0;
@@ -290,13 +321,14 @@ if ($result->num_rows > 0) {
         }
     </style>
 </head>
+
 <body>
     <header class="header">
-        <a href="index.php"><img src="img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
+        <a href="../index.php"><img src="../img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
         <div class="title">Sistema de Registro Unificado de Normativas de Atividades Suplementares - RUNAS</div>
-        <a href="logout.php" class="logout-button">Sair</a>
+        <a href="../logout.php" class="logout-button">Sair</a>
     </header>
-    
+
     <div class="main-content">
         <!-- Lado Esquerdo: PPC -->
         <div class="left-column">
@@ -314,18 +346,27 @@ if ($result->num_rows > 0) {
             <div class="turmas-cadastradas">
                 <h2>Turmas Cadastradas</h2>
                 <ul>
-                    <li><a href="#">Turma A - 2024/1</a></li>
-                    <li><a href="#">Turma B - 2024/1</a></li>
-                    <li><a href="#">Turma C - 2024/1</a></li>
+                    <?php if ($resultTurmas->num_rows > 0): ?>
+                        <?php while ($turma = $resultTurmas->fetch_assoc()): ?>
+                            <li>
+                                <a href="visualizar-turma.php?id=<?php echo $turma['id']; ?>">
+                                    <?php echo $turma['turma_nome'] . " - " . $turma['curso_nome']; ?>
+                                </a>
+                            </li>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <li>Nenhuma turma cadastrada.</li>
+                    <?php endif; ?>
                 </ul>
             </div>
 
             <!-- Ações Rápidas -->
             <div class="actions-area">
                 <h2>Ações</h2>
-                <button>Adicionar Seções de Horas Complementares</button>
-                <button>Alterar Nome de uma Turma</button>
-                <button>Adicionar uma Turma</button>
+                <a href="cria-turma.php">Adicionar categorias de Atividades Complementares</a>
+                <a href="cria-turma.php">Validar Atividades Complementares</a>
+                <a href="edita-turma.php">Editar Turma</a>
+                <a href="cria-turma.php">Adicionar uma Turma</a>
                 <button>Arquivar Turma</button>
             </div>
         </div>
@@ -334,11 +375,11 @@ if ($result->num_rows > 0) {
         <div class="right-column">
             <div class="user-info">
                 <h2>Dados Pessoais</h2>
-                <p><strong>Nome:</strong> <?php echo $usuario['nome']; ?></p>
-                <p><strong>Email:</strong> <?php echo $usuario['email']; ?></p>
-                <p><strong>Endereço:</strong> <?php echo $usuario['endereco']; ?></p>
-                <p><strong>Curso:</strong> <?php echo $usuario['curso']; ?></p>
-                <p><strong>Número de Matrícula:</strong> <?php echo $usuario['matricula']; ?></p>
+                <p><strong>Nome:</strong> <?php echo $docente['nome']; ?></p>
+                <p><strong>Email:</strong> <?php echo $docente['email']; ?></p>
+                <p><strong>Endereço:</strong> <?php echo $docente['endereco']; ?></p>
+                <p><strong>Curso:</strong> <?php echo $docente['curso']; ?></p>
+                <p><strong>Número de Matrícula:</strong> <?php echo $docente['matricula']; ?></p>
                 <a href="editar-dados.php" class="edit-link">Visualizar, Adicionar e/ou Editar Dados Pessoais</a>
             </div>
 
@@ -350,4 +391,5 @@ if ($result->num_rows > 0) {
         </div>
     </div>
 </body>
+
 </html>

@@ -293,6 +293,11 @@ if ($result->num_rows > 0) {
 
         <!-- Lado Central -->
         <div class="center-column">
+            <!-- Mensagem de Boas-Vindas -->
+            <div class="welcome-message">
+                Bem-vindo, Gabriel!
+            </div>
+
             <!-- Barra de Progresso -->
             <div class="progress-container">
                 <div class="progress-bar" style="width: 60%;">
@@ -301,13 +306,8 @@ if ($result->num_rows > 0) {
                 <div class="progress-details">Horas totais completadas: 85/100</div>
             </div>
 
-            <!-- Mensagem de Boas-Vindas -->
             <div class="welcome-message">
-                Bem-vindo, Gabriel!
-            </div>
-
-            <div class="welcome-message">
-                <a href="enviar-certificados.php" class="download-button">Enviar Certificados</a>
+                <a href="enviar-atividades.php" class="download-button">Enviar Atividades Complementares</a>
             </div>
 
             <!-- Uploads Recentes -->

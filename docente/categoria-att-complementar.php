@@ -1,9 +1,13 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validação de Atividades Complementares - Instituto Federal</title>
+    <title>Envio de Atividades Complementares - Instituto Federal</title>
     <style>
         * {
             margin: 0;
@@ -26,7 +30,8 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            width: 80px; /* Tamanho menor da logomarca */
+            width: 80px;
+            /* Tamanho menor da logomarca */
         }
 
         .container {
@@ -110,18 +115,19 @@
         }
     </style>
 </head>
+
 <body>
-    <a href="index.php"><img src="img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
+    <a href="../index.php"><img src="../img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
     <div class="container">
         <div class="box">
-            <h1>Validação de Atividades Complementares</h1>
+            <h1>Envio de Atividades Complementares</h1>
             <form action="#" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="atividade">ID da Atividade</label>
-                    <input type="text" id="atividade" name="atividade" placeholder="ID da Atividade" required>
+                    <label for="nome-atividade">Nome da Turma</label>
+                    <input type="text" id="nome-atividade" name="nome-atividade" placeholder="Nome da Atividade" required>
                 </div>
                 <div class="form-group">
-                    <label for="categoria">Categoria da Atividade</label>
+                    <label for="categoria">Curso da Turma</label>
                     <select id="categoria" name="categoria" required>
                         <option value="" disabled selected>Selecione a Categoria</option>
                         <option value="palestra">Palestra</option>
@@ -131,14 +137,11 @@
                         <option value="outros">Outros</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="certificado">Upload do Certificado</label>
-                    <input type="file" id="certificado" name="certificado" accept=".pdf,.jpg,.jpeg,.png" required>
-                </div>
-                <button type="submit" class="submit-button">Validar</button>
+                <button type="submit" class="submit-button">Enviar</button>
+                <a class="submit-button" href="main.php">Voltar</a>
             </form>
-            <a href="main.php" class="back-link">Voltar</a>
         </div>
     </div>
 </body>
+
 </html>
