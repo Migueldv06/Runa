@@ -6,17 +6,24 @@ include "../config.php";   // Inclui a conexão com o banco de dados
 $id = $_SESSION['id'];
 
 // Consulta as informações do discente
-$sql = "SELECT nome, email, matricula, turma, turno, endereco FROM discente WHERE id = '$id'";
-$result = $DB->query($sql) or die("Falha na execução do MySQL: " . $DB->error);
+$sqlDiscente = "SELECT nome, email, matricula, turma, turno, endereco FROM discente WHERE id = '$id'";
+$resultDiscenteDiscente = $DB->query($sqlDiscente) or die("Falha na execução do MySQL: " . $DB->error);
 
 // Verifica se o usuário foi encontrado
-if ($result->num_rows > 0) {
-    $usuario = $result->fetch_assoc();  // Armazena os dados do usuário em um array
+if ($resultDiscenteDiscente->num_rows >= 0) {
+    $discente = $resultDiscenteDiscente->fetch_assoc();  // Armazena os dados do usuário em um array
 } else {
     echo "Usuário não encontrado.";
     exit();
 }
 
+// Consulta as turmas cadastradas
+$sql_atividades = "SELECT id, nome, categoria, data_upload 
+                           FROM atividade 
+                           WHERE discente_id = '$id' 
+                           ORDER BY data_upload DESC 
+                           LIMIT 5"; // Mostra até 5 atividades mais recentes
+        $resultAtividades = $DB->query($sql_atividades);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -318,6 +325,20 @@ if ($result->num_rows > 0) {
                     <li><span>ID: 12346</span>Workshop de Tecnologias - 05/08/2024</li>
                     <li><span>ID: 12347</span>Curso de Desenvolvimento - 01/08/2024</li>
                 </ul>
+                <ul>
+                    <?php 
+                    if ($resultAtividades->num_rows > 0) {
+                        while ($atividade = $resultAtividades->fetch_assoc()) {
+                            echo "<li>
+                                    <span>ID: {$atividade['id']}</span>
+                                    {$atividade['nome']} ({$atividade['categoria']}) - " . date("d/m/Y", strtotime($atividade['data_upload'])) . "
+                                  </li>";
+                        }
+                    } else {
+                        echo "<li>Nenhuma atividade enviada recentemente.</li>";
+                    }
+                    ?>
+                </ul>
             </div>
 
             <!-- Verificação de Atividades -->
@@ -337,12 +358,12 @@ if ($result->num_rows > 0) {
         <div class="right-column">
             <div class="user-info">
                 <h2>Dados Pessoais</h2>
-                <p><strong>Nome:</strong> <?php echo $usuario['nome']; ?></p>
-                <p><strong>Email:</strong> <?php echo $usuario['email']; ?></p>
-                <p><strong>Endereço:</strong> <?php echo $usuario['endereco']; ?></p>
-                <p><strong>Turma:</strong> <?php echo $usuario['turma']; ?></p>
-                <p><strong>Turno:</strong> <?php echo $usuario['turno']; ?></p>
-                <p><strong>Número de Matrícula:</strong> <?php echo $usuario['matricula']; ?></p>
+                <p><strong>Nome:</strong> <?php echo $discente['nome']; ?></p>
+                <p><strong>Email:</strong> <?php echo $discente['email']; ?></p>
+                <p><strong>Endereço:</strong> <?php echo $discente['endereco']; ?></p>
+                <p><strong>Turma:</strong> <?php echo $discente['turma']; ?></p>
+                <p><strong>Turno:</strong> <?php echo $discente['turno']; ?></p>
+                <p><strong>Número de Matrícula:</strong> <?php echo $discente['matricula']; ?></p>
                 <a href="editar-dados.php" class="edit-link">Visualizar, Adicionar e/ou Editar Dados Pessoais</a>
             </div>
         </div>

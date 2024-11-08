@@ -16,6 +16,7 @@ if ($resultDocente->num_rows > 0) {
     echo "Usuário não encontrado.";
     exit();
 }
+
 // Consulta as turmas cadastradas
 $sqlTurmas = "SELECT turma.id, turma.nome AS turma_nome, curso.nome AS curso_nome 
               FROM turma
