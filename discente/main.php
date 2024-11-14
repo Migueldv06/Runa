@@ -321,11 +321,6 @@ $sql_atividades = "SELECT id, nome, categoria, data_upload
             <div class="uploads-recentes">
                 <h2>Uploads Recentes</h2>
                 <ul>
-                    <li><span>ID: 12345</span>Palestra sobre Inovação - 10/08/2024</li>
-                    <li><span>ID: 12346</span>Workshop de Tecnologias - 05/08/2024</li>
-                    <li><span>ID: 12347</span>Curso de Desenvolvimento - 01/08/2024</li>
-                </ul>
-                <ul>
                     <?php 
                     if ($resultAtividades->num_rows > 0) {
                         while ($atividade = $resultAtividades->fetch_assoc()) {
