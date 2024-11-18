@@ -5,15 +5,24 @@ include "protect-discente.php";
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $atividadeId = (int) $_GET['id'];
 
-    // Consulta a turmas selecionada
-    $sql = "SELECT * FROM atividade WHERE id = $atividadeId";
+    // Consulta a atividade e o nome do discente
+    $sql = "
+        SELECT a.*, d.nome AS nome_discente
+        FROM atividade a
+        INNER JOIN discente d ON a.discente_id = d.id
+        WHERE a.id = $atividadeId
+    ";
     $resultAtividades = $DB->query($sql);
 
     if ($resultAtividades->num_rows > 0) {
         $atividade = $resultAtividades->fetch_assoc();
     } else {
         echo "Atividade não encontrada.";
+        exit;
     }
+} else {
+    echo "ID de atividade inválido.";
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -22,7 +31,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envio de Atividades Complementares - Instituto Federal</title>
+    <title>Validação de Atividades Complementares - Instituto Federal</title>
     <style>
         * {
             margin: 0;
@@ -135,16 +144,21 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <a href="../index.php"><img src="../img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
     <div class="container">
         <div class="box">
-            <h1>Envio de Atividades Complementares</h1>
+            <h1>Validação de Atividades Complementares</h1>
             <form action="#" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="certificado">Exibir Certificado de atividade</label>
                     <input type="file" id="certificado" name="certificado" accept=".pdf,.jpg,.jpeg,.png" required>
                 </div>
                 <div class="form-group">
+                    <label for="nome-discente">Nome do Discente</label>
+                    <input type="text" id="nome-discente" name="nome-discente"
+                        value="<?php echo htmlspecialchars($atividade['nome_discente']); ?>" readonly>
+                </div>
+                <div class="form-group">
                     <label for="nome-atividade">Nome da Atividade</label>
                     <input type="text" id="nome-atividade" name="nome-atividade" placeholder="Nome da Atividade"
-                        required>
+                        value="<?php echo $atividade['nome'] ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label for="horas-atividade">Horas da Atividade</label>
@@ -155,8 +169,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     <label for="categoria">Status da Atividade</label>
                     <select id="categoria" name="categoria" required>
                         <option value="Pendente" disabled selected>Selecione o Status</option>
-                        <option value="valida">Atividade valida</option>
-                        <option value="invalida">Atividade invalida</option>
+                        <option value="Valida">Atividade valida</option>
+                        <option value="Invalida">Atividade invalida</option>
                     </select>
                 </div>
                 <button type="submit" class="submit-button">Enviar</button>
