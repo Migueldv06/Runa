@@ -7,7 +7,7 @@ $result = $DB->query($sql) or die("Falha na execução do MySQL: " . $DB->error)
 
 // Verifica se o usuário foi encontrado
 if ($result->num_rows <= 0) {
-    echo "Sem Curso no sistema.";
+    echo "Atividades no Sistema.";
     exit();
 }
 // Consulta as turmas cadastradas
