@@ -2,17 +2,15 @@
 include "../config.php";
 include "protect-docente.php";
 
-$sql = "SELECT * FROM atividade";
-$result = $DB->query($sql) or die("Falha na execução do MySQL: " . $DB->error);
-
-// Verifica se o usuário foi encontrado
-if ($result->num_rows <= 0) {
-    echo "Atividades no Sistema.";
-    exit();
-}
 // Consulta as turmas cadastradas
 $sql_atividades = "SELECT * FROM atividade ORDER BY data_upload DESC ";// Mostra até 5 atividades mais recentes
 $resultAtividades = $DB->query($sql_atividades);
+
+// Verifica se o usuário foi encontrado
+if ($resultAtividades->num_rows <= 0) {
+    echo "Atividades no Sistema.";
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -178,15 +176,13 @@ $resultAtividades = $DB->query($sql_atividades);
         <h2>Atividades</h2>
         <ul>
             <?php
-            if ($resultAtividades->num_rows > 0) {
-                while ($atividade = $resultAtividades->fetch_assoc()) {
-                    echo "<li>
-                                    <span>ID: {$atividade['id']}</span>
-                                    {$atividade['nome']} ({$atividade['categoria']}) - " . date("d/m/Y ", strtotime($atividade['data_upload'])) . "Status: {$atividade['status']}" . "
-                                  </li>";
-                }
-            } else {
-                echo "<li>Nenhuma atividade enviada recentemente.</li>";
+            while ($atividade = $resultAtividades->fetch_assoc()) {
+                echo "<li>
+                        <span>ID: {$atividade['id']}</span>
+                        {$atividade['nome']} ({$atividade['categoria']}) - " . date("d/m/Y ", strtotime($atividade['data_upload'])) . "
+                        Status: {$atividade['status']}
+                        <a href='valida-atividade.php?id={$atividade['id']}' style='color: #00796b; font-weight: bold; text-decoration: none;'>Selecionar</a>
+                      </li>";
             }
             ?>
         </ul>

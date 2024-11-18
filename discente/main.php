@@ -2,6 +2,8 @@
 include "protect-discente.php";
 include "../config.php";   // Inclui a conexão com o banco de dados
 
+$horas_discente = 50;
+
 // Recupera o ID do usuário da sessão
 $id = $_SESSION['id'];
 
@@ -307,10 +309,10 @@ $sql_atividades = "SELECT id, nome, categoria, data_upload
 
             <!-- Barra de Progresso -->
             <div class="progress-container">
-                <div class="progress-bar" style="width: 60%;">
-                    <div class="progress-info">60%</div>
+                <div class="progress-bar" style="width: <?php echo "$horas_discente"?>%;">
+                    <div class="progress-info"><?php echo "$horas_discente" ?>%</div>
                 </div>
-                <div class="progress-details">Horas totais completadas: 85/100</div>
+                <div class="progress-details">Horas totais completadas: <?php echo "$horas_discente"?>/100</div>
             </div>
 
             <div class="welcome-message">
