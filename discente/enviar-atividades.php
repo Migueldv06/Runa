@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verifica se o arquivo foi carregado sem erros
     if ($arquivo['error'] === UPLOAD_ERR_OK) {
         $extensao = pathinfo($arquivo['name'], PATHINFO_EXTENSION);
-        $nomeArquivo = pathinfo($arquivo['name'], PATHINFO_FILENAME) . "_" . time() . "." . $extensao;
+        $nomeArquivo = pathinfo($arquivo['name'], PATHINFO_FILENAME) . "_" . md5(time()) . "." . $extensao;
         $diretorioDestino = '../atividades/' . $nomeArquivo;
 
         // Move o arquivo para o diretório de uploads
