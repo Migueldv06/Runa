@@ -26,7 +26,7 @@ $sql_atividades = "SELECT id, nome, categoria, data_upload
 $resultAtividades = $DB->query($sql_atividades);
 
 // Soma total das horas das atividades do discente
-$sqlTotalHoras = "SELECT SUM(horas_atividade) AS total_horas FROM atividade WHERE discente_id = '$id'";
+$sqlTotalHoras = "SELECT SUM(horas_atividade) AS total_horas FROM atividade WHERE discente_id = '$id' and status = '2'";
 $resultTotalHoras = $DB->query($sqlTotalHoras);
 
 // Verifica o resultado e armazena o total

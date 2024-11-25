@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Tempo de geração: 08/11/2024 às 11:15
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- Host: localhost:3306
+-- Tempo de geração: 25-Nov-2024 às 17:45
+-- Versão do servidor: 10.6.18-MariaDB-0ubuntu0.22.04.1
+-- versão do PHP: 8.1.2-1ubuntu2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `atividade`
+-- Estrutura da tabela `atividade`
 --
 
 CREATE TABLE `atividade` (
@@ -34,23 +34,24 @@ CREATE TABLE `atividade` (
   `categoria` varchar(200) DEFAULT NULL,
   `horas_atividade` int(11) DEFAULT NULL,
   `discente_id` int(11) DEFAULT NULL,
-  `status` varchar(200) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
   `data_upload` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `atividade`
+-- Extraindo dados da tabela `atividade`
 --
 
 INSERT INTO `atividade` (`id`, `nome`, `caminho_arquivo`, `categoria`, `horas_atividade`, `discente_id`, `status`, `data_upload`) VALUES
-(1, 'teste1', '../atividades/Captura de tela de 2024-10-17 14-53-12.png', 'seminario', 122, 1, 'Pendente', '2024-10-25 20:33:58'),
-(2, 'teste3', '../atividades/luig3_1729889082.jpeg', 'workshop', 122, 1, 'Pendente', '2024-10-25 20:44:43'),
-(3, 'teste3', '../atividades/luig3_1729889117.jpeg', 'workshop', 122, 1, 'Pendente', '2024-10-25 20:45:17');
+(1, 'teste1', '../atividades/Captura de tela de 2024-10-17 14-53-12.png', 'seminario', 6, 1, 1, '2024-10-25 20:33:58'),
+(2, 'teste3', '../atividades/luig3_1729889082.jpeg', 'workshop', 11, 1, 1, '2024-10-25 20:44:43'),
+(3, 'teste3', '../atividades/luig3_1729889117.jpeg', 'workshop', 12, 1, 1, '2024-10-25 20:45:17'),
+(4, 'relat', '../atividades/REL ESTUDANTE 3_MIGUEL DOMICIANO VIEIRA_8cbb12d7fbe1f8b4fb7c31738cf7cdfd.pdf', 'seminario', 10, 1, 2, '2024-11-19 18:21:29');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `curso`
+-- Estrutura da tabela `curso`
 --
 
 CREATE TABLE `curso` (
@@ -59,7 +60,7 @@ CREATE TABLE `curso` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `curso`
+-- Extraindo dados da tabela `curso`
 --
 
 INSERT INTO `curso` (`id`, `nome`) VALUES
@@ -68,7 +69,7 @@ INSERT INTO `curso` (`id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `discente`
+-- Estrutura da tabela `discente`
 --
 
 CREATE TABLE `discente` (
@@ -85,7 +86,7 @@ CREATE TABLE `discente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `discente`
+-- Extraindo dados da tabela `discente`
 --
 
 INSERT INTO `discente` (`id`, `nome`, `cpf`, `matricula`, `email`, `senha`, `telefone`, `endereco`, `turno`, `turma`) VALUES
@@ -94,7 +95,7 @@ INSERT INTO `discente` (`id`, `nome`, `cpf`, `matricula`, `email`, `senha`, `tel
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `docente`
+-- Estrutura da tabela `docente`
 --
 
 CREATE TABLE `docente` (
@@ -110,7 +111,7 @@ CREATE TABLE `docente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `docente`
+-- Extraindo dados da tabela `docente`
 --
 
 INSERT INTO `docente` (`id`, `nome`, `cpf`, `matricula`, `email`, `senha`, `telefone`, `endereco`, `curso`) VALUES
@@ -119,7 +120,7 @@ INSERT INTO `docente` (`id`, `nome`, `cpf`, `matricula`, `email`, `senha`, `tele
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `turma`
+-- Estrutura da tabela `turma`
 --
 
 CREATE TABLE `turma` (
@@ -129,7 +130,7 @@ CREATE TABLE `turma` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `turma`
+-- Extraindo dados da tabela `turma`
 --
 
 INSERT INTO `turma` (`id`, `nome`, `curso`) VALUES
@@ -142,48 +143,48 @@ INSERT INTO `turma` (`id`, `nome`, `curso`) VALUES
 --
 
 --
--- Índices de tabela `atividade`
+-- Índices para tabela `atividade`
 --
 ALTER TABLE `atividade`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_atividades_discente` (`discente_id`);
 
 --
--- Índices de tabela `curso`
+-- Índices para tabela `curso`
 --
 ALTER TABLE `curso`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `discente`
+-- Índices para tabela `discente`
 --
 ALTER TABLE `discente`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_discente_turma` (`turma`);
 
 --
--- Índices de tabela `docente`
+-- Índices para tabela `docente`
 --
 ALTER TABLE `docente`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_docente_curso` (`curso`);
 
 --
--- Índices de tabela `turma`
+-- Índices para tabela `turma`
 --
 ALTER TABLE `turma`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_turma_curso` (`curso`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
 -- AUTO_INCREMENT de tabela `atividade`
 --
 ALTER TABLE `atividade`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `curso`
@@ -210,29 +211,29 @@ ALTER TABLE `turma`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- Restrições para tabelas despejadas
+-- Restrições para despejos de tabelas
 --
 
 --
--- Restrições para tabelas `atividade`
+-- Limitadores para a tabela `atividade`
 --
 ALTER TABLE `atividade`
   ADD CONSTRAINT `fk_atividades_discente` FOREIGN KEY (`discente_id`) REFERENCES `discente` (`id`);
 
 --
--- Restrições para tabelas `discente`
+-- Limitadores para a tabela `discente`
 --
 ALTER TABLE `discente`
   ADD CONSTRAINT `fk_discente_turma` FOREIGN KEY (`turma`) REFERENCES `turma` (`id`);
 
 --
--- Restrições para tabelas `docente`
+-- Limitadores para a tabela `docente`
 --
 ALTER TABLE `docente`
   ADD CONSTRAINT `fk_docente_curso` FOREIGN KEY (`curso`) REFERENCES `curso` (`id`);
 
 --
--- Restrições para tabelas `turma`
+-- Limitadores para a tabela `turma`
 --
 ALTER TABLE `turma`
   ADD CONSTRAINT `fk_turma_curso` FOREIGN KEY (`curso`) REFERENCES `curso` (`id`);
