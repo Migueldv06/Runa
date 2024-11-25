@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $categoria = $_POST['categoria'];
     $arquivo = $_FILES['certificado'];
     $discente_id = $_SESSION['id'];
-    $status = 'Pendente'; // Status inicial
+    $status = '1'; // Status inicial
 
     // Verifica se o arquivo foi carregado sem erros
     if ($arquivo['error'] === UPLOAD_ERR_OK) {

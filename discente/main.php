@@ -2,8 +2,6 @@
 include "protect-discente.php";
 include "../config.php";   // Inclui a conexão com o banco de dados
 
-$horas_discente = 50;
-
 // Recupera o ID do usuário da sessão
 $id = $_SESSION['id'];
 
@@ -25,7 +23,21 @@ $sql_atividades = "SELECT id, nome, categoria, data_upload
                            WHERE discente_id = '$id' 
                            ORDER BY data_upload DESC 
                            LIMIT 5"; // Mostra até 5 atividades mais recentes
-        $resultAtividades = $DB->query($sql_atividades);
+$resultAtividades = $DB->query($sql_atividades);
+
+// Soma total das horas das atividades do discente
+$sqlTotalHoras = "SELECT SUM(horas_atividade) AS total_horas FROM atividade WHERE discente_id = '$id'";
+$resultTotalHoras = $DB->query($sqlTotalHoras);
+
+// Verifica o resultado e armazena o total
+if ($resultTotalHoras && $row = $resultTotalHoras->fetch_assoc()) {
+    $horas_discente = $row['total_horas'] ?? 0; // Se null, define como 0
+} else {
+    $horas_discente = 0; // Em caso de erro ou sem registros
+}
+$meta_horas = 100;
+$progresso = min(100, ($horas_discente / $meta_horas) * 100); // Limita o progresso a 100%
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -293,7 +305,8 @@ $sql_atividades = "SELECT id, nome, categoria, data_upload
         <div class="left-column">
             <div class="ppc">
                 <h2>Projeto Pedagógico do Curso (PPC)</h2>
-                <p>O Projeto Pedagógico do Curso (PPC) é um documento importante que define a estrutura do curso, incluindo objetivos, disciplinas e outras informações relevantes.</p>
+                <p>O Projeto Pedagógico do Curso (PPC) é um documento importante que define a estrutura do curso,
+                    incluindo objetivos, disciplinas e outras informações relevantes.</p>
                 <p>Para visualizar o PPC atual, consulte o documento disponibilizado.</p>
                 <p>Se precisar fazer alterações ou enviar novos documentos, entre em contato com a coordenação.</p>
                 <a href="docs/ppc-regente.pdf" class="download-button" download>Baixar Documento PPC</a>
@@ -309,10 +322,11 @@ $sql_atividades = "SELECT id, nome, categoria, data_upload
 
             <!-- Barra de Progresso -->
             <div class="progress-container">
-                <div class="progress-bar" style="width: <?php echo "$horas_discente"?>%;">
-                    <div class="progress-info"><?php echo "$horas_discente" ?>%</div>
+                <div class="progress-bar" style="width: <?php echo $progresso; ?>%;">
+                    <div class="progress-info"><?php echo round($progresso, 2); ?>%</div>
                 </div>
-                <div class="progress-details">Horas totais completadas: <?php echo "$horas_discente"?>/100</div>
+                <div class="progress-details">Horas totais completadas:
+                    <?php echo $horas_discente; ?>/<?php echo $meta_horas; ?></div>
             </div>
 
             <div class="welcome-message">
@@ -323,7 +337,7 @@ $sql_atividades = "SELECT id, nome, categoria, data_upload
             <div class="uploads-recentes">
                 <h2>Uploads Recentes</h2>
                 <ul>
-                    <?php 
+                    <?php
                     if ($resultAtividades->num_rows > 0) {
                         while ($atividade = $resultAtividades->fetch_assoc()) {
                             echo "<li>
@@ -347,7 +361,9 @@ $sql_atividades = "SELECT id, nome, categoria, data_upload
             <!-- Contato com a Coordenação -->
             <div class="contact-info">
                 <h2>Contato com a Coordenação</h2>
-                <p>Para qualquer dúvida ou informação adicional, entre em contato com a coordenação pelo e-mail <a href="mailto:coordenacao@institutofederal.edu.br">coordenacao@institutofederal.edu.br</a> ou pelo telefone (11) 1234-5678.</p>
+                <p>Para qualquer dúvida ou informação adicional, entre em contato com a coordenação pelo e-mail <a
+                        href="mailto:coordenacao@institutofederal.edu.br">coordenacao@institutofederal.edu.br</a> ou
+                    pelo telefone (11) 1234-5678.</p>
             </div>
         </div>
 
