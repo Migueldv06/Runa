@@ -339,6 +339,14 @@ $resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->
                 <a href="docs/ppc-regente.pdf" download>Baixar Documento PPC</a>
                 <button>Alterar PPC</button>
             </div>
+
+            <div class="ppc">
+                <h2>Gerenciamento de Docentes</h2>
+                <button onclick="window.location.href='pre-cadastro-docente.php';">Adicionar Novo Docente</button>
+                <button onclick="window.location.href='alterar-docente.php';">Alterar Dados de Docente</button>
+                <button onclick="window.location.href='excluir-docente.php';">Excluir Docente</button>
+                <button onclick="window.location.href='visualizar-docentes.php';">Visualizar Docentes</button>
+            </div>
         </div>
 
         <!-- Lado Central -->

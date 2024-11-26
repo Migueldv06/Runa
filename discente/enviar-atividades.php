@@ -5,7 +5,7 @@ include "protect-discente.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $nome = $_POST['nome-atividade'];
-    $horas = intval($_POST['horas-atividade']);
+    $horas = $_POST['horas-atividade'];
     $categoria = $_POST['categoria'];
     $arquivo = $_FILES['certificado'];
     $discente_id = $_SESSION['id'];
@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="form-group">
                     <label for="horas-atividade">Horas da Atividade</label>
-                    <input type="text" id="horas-atividade" name="horas-atividade" placeholder="Horas da Atividade" required>
+                    <input type="number" id="horas-atividade" name="horas-atividade" placeholder="Horas da Atividade" required>
                 </div>
                 <div class="form-group">
                     <label for="categoria">Categoria da Atividade</label>
