@@ -342,10 +342,10 @@ $resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->
 
             <div class="ppc">
                 <h2>Gerenciamento de Docentes</h2>
-                <button onclick="window.location.href='pre-cadastro-docente.php';">Adicionar Novo Docente</button>
-                <button onclick="window.location.href='alterar-docente.php';">Alterar Dados de Docente</button>
-                <button onclick="window.location.href='excluir-docente.php';">Excluir Docente</button>
-                <button onclick="window.location.href='visualizar-docentes.php';">Visualizar Docentes</button>
+                <a onclick="window.location.href='pre-cadastro-discente.php';">Adicionar Novo Discente</a>
+                <a onclick="window.location.href='alterar-docente.php';">Alterar Dados de Discente</a>
+                <a onclick="window.location.href='excluir-docente.php';">Excluir Discente</a>
+                <a onclick="window.location.href='visualizar-docentes.php';">Visualizar Discentes</a>
             </div>
         </div>
 

@@ -12,6 +12,7 @@ $resultDiscenteDiscente = $DB->query($sqlDiscente) or die("Falha na execução d
 // Verifica se o usuário foi encontrado
 if ($resultDiscenteDiscente->num_rows >= 0) {
     $discente = $resultDiscenteDiscente->fetch_assoc();  // Armazena os dados do usuário em um array
+    list($primeiro_nome, $sobre_nome) = explode(" ", $discente["nome"],2);
 } else {
     echo "Usuário não encontrado.";
     exit();
@@ -35,7 +36,28 @@ if ($resultTotalHoras && $row = $resultTotalHoras->fetch_assoc()) {
 } else {
     $horas_discente = 0; // Em caso de erro ou sem registros
 }
-$meta_horas = 100;
+
+$turma_id = $discente['turma'];
+// Consulta para obter o curso relacionado à turma
+$sql_turma = "SELECT curso FROM turma WHERE id = $turma_id";
+$resultTurma = $DB->query($sql_turma) or die("Falha na execução do MySQL: " . $DB->error);
+
+if ($resultTurma && $rowTurma = $resultTurma->fetch_assoc()) {
+    $curso_id = $rowTurma['curso']; // Obtém o ID do curso
+
+    // Consulta para obter as horas necessárias do curso
+    $sql_curso = "SELECT horas_necessarias FROM curso WHERE id = '$curso_id'";
+    $resultCurso = $DB->query($sql_curso) or die("Falha na execução do MySQL: " . $DB->error);
+
+    if ($resultCurso && $rowCurso = $resultCurso->fetch_assoc()) {
+        $meta_horas = $rowCurso['horas_necessarias']; // Define a meta de horas
+    } else {
+        die("Não foi possível obter as horas necessárias para o curso.");
+    }
+} else {
+    die("Não foi possível obter o curso da turma.");
+}
+
 $progresso = min(100, ($horas_discente / $meta_horas) * 100); // Limita o progresso a 100%
 
 ?>
@@ -317,7 +339,7 @@ $progresso = min(100, ($horas_discente / $meta_horas) * 100); // Limita o progre
         <div class="center-column">
             <!-- Mensagem de Boas-Vindas -->
             <div class="welcome-message">
-                Bem-vindo, Gabriel!
+                Bem-vindo, <?php echo $primeiro_nome; ?>!
             </div>
 
             <!-- Barra de Progresso -->
@@ -326,7 +348,8 @@ $progresso = min(100, ($horas_discente / $meta_horas) * 100); // Limita o progre
                     <div class="progress-info"><?php echo round($progresso, 2); ?>%</div>
                 </div>
                 <div class="progress-details">Horas totais completadas:
-                    <?php echo $horas_discente; ?>/<?php echo $meta_horas; ?></div>
+                    <?php echo $horas_discente; ?>/<?php echo $meta_horas; ?>
+                </div>
             </div>
 
             <div class="welcome-message">
@@ -352,6 +375,12 @@ $progresso = min(100, ($horas_discente / $meta_horas) * 100); // Limita o progre
                 </ul>
             </div>
 
+            <!-- Verificação de Atividades -->
+            <div class="verificacao">
+                <h2>Verificar Andamento de Avaliação de Atividades Complementares</h2>
+                <p>Confira o status das suas atividades complementares e acompanhe o andamento da validação.</p>
+                <!-- Adicione informações ou links para verificar o andamento -->
+            </div>
             <!-- Verificação de Atividades -->
             <div class="verificacao">
                 <h2>Verificar Andamento de Avaliação de Atividades Complementares</h2>

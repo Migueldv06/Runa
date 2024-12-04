@@ -22,10 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt->execute()) {
         echo "<p>Turma criada com sucesso!</p>";
+    } else {
+        echo "<p>Erro na criação da turma.</p>";
     }
     header("Location: main.php");
-} else {
-    echo "<p>Erro na criação da turma.</p>";
 }
 ?>
 <!DOCTYPE html>
