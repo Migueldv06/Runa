@@ -237,6 +237,11 @@ if (isset($_FILES['certificado'])) {
                         value="<?php echo $atividade['nome'] ?>" readonly>
                 </div>
                 <div class="form-group">
+                    <label for="categoria">Categoria</label>
+                    <input type="text" id="Categoria" name="Categoria" placeholder="Categoria"
+                        value="<?php echo $atividade['categoria'] ?>" readonly>
+                </div>
+                <div class="form-group">
                     <label for="horas-atividade">Horas da Atividade</label>
                     <input type="text" id="horas-atividade" name="horas-atividade" placeholder="Horas da Atividade"
                         value="<?php echo $atividade['horas_atividade']; ?>" required>

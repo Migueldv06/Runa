@@ -1,49 +1,12 @@
 <?php
-include "../config.php";
-include "protect-docente.php";
-
-$id = $_SESSION['id'];
-$sql = "SELECT * FROM docente WHERE id='$id'";
-$result = $DB->query($sql) or die("Falha na execução do MySQL: " . $DB->error);
-
-// Verifica se o usuário foi encontrado
-if ($result->num_rows > 0) {
-    $usuario = $result->fetch_assoc();  // Armazena os dados do usuário em um array
-} else {
-    echo "Usuário não encontrado.";
-    exit();
-}
-
-// Processa a atualização do formulário
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome = $_POST['nome'];
-    $matricula = $_POST['matricula'];
-    $cpf = $_POST['cpf'];
-    $email = $_POST['email'];
-    $endereco = $_POST['endereco'];
-    $curso = $_POST['curso'];
-    $telefone = $_POST['telefone'];
-
-    // Query para atualizar os dados do usuário no banco de dados
-    $updateSql = "UPDATE docente SET nome=?, matricula=?, cpf=?, email=?, endereco=?, curso=?, telefone=? WHERE id=?";
-    $stmt = $DB->prepare($updateSql);
-    $stmt->bind_param("sisssssi", $nome, $matricula, $cpf, $email, $endereco, $curso, $telefone, $id);
-
-    if ($stmt->execute()) {
-        echo "<p>Dados atualizados com sucesso!</p>";
-        // Atualiza os dados exibidos sem recarregar a página
-        header("Refresh:0");
-    } else {
-        echo "<p>Erro ao atualizar os dados.</p>";
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Cadastro do Docente - SiVAC</title>
+    <title>Editar Cadastro do Discente - SiVAC</title>
     <style>
         * {
             margin: 0;
@@ -112,7 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .form-container input[type="text"],
         .form-container input[type="email"],
         .form-container input[type="endereco"],
-        .form-container input[type="curso"],
+        .form-container input[type="turno"],
+        .form-container input[type="turma"],
         .form-container input[type="tel"],
         .form-container input[type="number"] {
             width: 100%;
@@ -154,6 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </style>
 </head>
+
 <body>
     <header class="header">
         <a href="../index.php"><img src="../img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
@@ -162,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="container">
         <div class="form-container">
-            <h1>Editar Cadastro do Docente</h1>
+            <h1>Editar Cadastro do Discente</h1>
             <form id="preCadastroForm" onsubmit="return validateForm()" method="post">
                 <label for="nome">Nome Completo:</label>
                 <input type="text" id="nome" name="nome" placeholder="Nome Completo" value="<?php echo $usuario['nome'] ?>" required>
@@ -184,9 +149,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="endereco" id="endereco" name="endereco" placeholder="Endereço" value="<?php echo $usuario['endereco'] ?>">
                 <span class="error" id="enderecoError"></span>
 
-                <label for="curso">Curso:</label>
-                <input type="curso" id="curso" name="curso" placeholder="curso" value="<?php echo $usuario['curso'] ?>">
-                <span class="error" id="cursoError"></span>
+                <label for="turno">Turno:</label>
+                <input type="turno" id="turno" name="turno" placeholder="Turno" value="<?php echo $usuario['turno'] ?>">
+                <span class="error" id="turnoError"></span>
+
+                <label for="turma">Turma:</label>
+                <input type="turma" id="turma" name="turma" placeholder="Turma" value="<?php echo $usuario['turma'] ?>">
+                <span class="error" id="turmaError"></span>
 
                 <label for="telefone">Número de Telefone (Opcional):</label>
                 <input type="tel" id="telefone" name="telefone" placeholder="Número de Telefone" value="<?php echo $usuario['telefone'] ?>">
@@ -256,4 +225,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </script>
 </body>
+
 </html>

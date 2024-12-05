@@ -6,7 +6,6 @@ $sqlTurma = "SELECT * FROM turma";
 $resultTurma = $DB->query($sqlTurma) or die("Falha na execução do MySQL: " . $DB->error);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $nome = $_POST['nome'];
     $cpf = $_POST['cpf'];
     $matricula = $_POST['matricula'];
@@ -21,11 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("siisssi", $nome, $cpf, $matricula, $email, $telefone, $turno, $turma);
 
     if ($stmt->execute()) {
-        echo "<p>Turma criada com sucesso!</p>";
+        echo "<script>alert('Pre Cadastro de Discente criado com sucesso!'); window.location.href='main.php';</script>";
     } else {
-        echo "<p>Erro na criação da turma.</p>";
+        echo "<script>alert('Erro no Pre Cadastro de Discente!'); window.location.href='main.php';</script>";
     }
-    //header("Location: main.php");
 }
 ?>
 <!DOCTYPE html>

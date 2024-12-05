@@ -1,5 +1,40 @@
+<?php
+include "config.php";   // Inclui a conexão com o banco de dados
+
+// Processa o envio do formulário
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $metodo = $_POST['validationSelect'];
+
+    if ($metodo === "matricula") {
+        $matricula = $DB->real_escape_string($_POST['matricula']);
+        $cpf = $DB->real_escape_string($_POST['cpf']);
+
+        $query = "SELECT * FROM discente WHERE matricula = '$matricula' AND cpf = '$cpf' AND status = '0'";
+        $result = $DB->query($query) or die("Erro na consulta ao banco: " . $DB->error);
+        if ($result->num_rows > 0) {
+            echo "<script>alert('Pré-cadastro encontrado! Por favor, complete as informações!'); window.location.href='complete-pre-cad-disc.php';</script>";
+        } else {
+            // Pré-cadastro não encontrado
+            echo "<script>alert('Nenhum pré-cadastro encontrado!'); window.location.reload();</script>";
+        }
+    } elseif ($metodo === "email") {
+        $email = $DB->real_escape_string($_POST['email']);
+        $cpf = $DB->real_escape_string($_POST['cpfEmail']);
+
+        $query = "SELECT * FROM discente WHERE email = '$email' AND cpf = '$cpf' AND status = '0'";
+        $result = $DB->query($query) or die("Erro na consulta ao banco: " . $DB->error);
+
+        if ($result->num_rows > 0) {
+            echo "<script>alert('Pré-cadastro encontrado! Por favor, complete as informações!'); window.location.href='complete-pre-cad-disc.php';</script>";
+        } else {
+            echo "<script>alert('Nenhum pré-cadastro encontrado!'); window.location.reload();</script>";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,7 +81,7 @@
             flex-direction: column;
             flex: 1;
             margin: 20px;
-            
+
             align-items: center;
         }
 
@@ -57,7 +92,8 @@
             padding: 20px;
             max-width: 600px;
             margin: 0 auto;
-            display: none; /* Initially hidden */
+            display: none;
+            /* Initially hidden */
         }
 
         .form-container h1 {
@@ -114,7 +150,8 @@
         }
 
         .form-container select {
-            width: 200px; /* Ajuste do tamanho da caixa de seleção */
+            width: 200px;
+            /* Ajuste do tamanho da caixa de seleção */
             padding: 12px;
             margin-bottom: 20px;
             border: 1px solid #ddd;
@@ -124,8 +161,8 @@
             color: #333;
             cursor: pointer;
         }
-        
-        select{
+
+        select {
             width: 200px;
             text-size-adjust: 90px;
             font-size: 17px;
@@ -133,6 +170,7 @@
         }
     </style>
 </head>
+
 <body>
     <header class="header">
         <a href="index.php"><img src="img/Runa.png" alt="Logo Runas" class="logo"></a>
@@ -140,19 +178,20 @@
     </header>
 
     <div class="container">
-       
-        <label for="validationSelect">Escolha o método de validação:</label> 
+
+        <label for="validationSelect">Escolha o método de validação:</label>
         <div class="negocio">
-        <select id="validationSelect">
-            <option value="">Selecione um método</option>
-            <option value="matricula">Número de Matrícula e CPF</option>
-            <option value="email">Email e CPF</option>
-        </select>
-    </div>
+            <select id="validationSelect">
+                <option value="">Selecione um método</option>
+                <option value="matricula">Número de Matrícula e CPF</option>
+                <option value="email">Email e CPF</option>
+            </select>
+        </div>
         <div id="formContainer" class="form-container">
             <h1>Validar Pré-Cadastro Discente</h1>
-            <form id="validarPreCadastroForm" onsubmit="return validateForm()">
-                <div id="matriculaFields">
+            <form id="validarPreCadastroForm" onsubmit="return validateForm()" method="post">
+                <input type="hidden" name="validationSelect" id="hiddenValidationSelect" value="">
+                <div id="matriculaFields" style="display: none;">
                     <label for="matricula">Número de Matrícula:</label>
                     <input type="number" id="matricula" name="matricula" placeholder="Número de Matrícula">
                     <span class="error" id="matriculaError"></span>
@@ -178,9 +217,10 @@
     </div>
 
     <script>
-        document.getElementById('validationSelect').addEventListener('change', function() {
+        document.getElementById('validationSelect').addEventListener('change', function () {
             const formContainer = document.getElementById('formContainer');
             const selectedValue = this.value;
+            document.getElementById('hiddenValidationSelect').value = selectedValue;
 
             if (selectedValue === 'matricula') {
                 document.getElementById('matriculaFields').style.display = 'block';
@@ -192,6 +232,8 @@
                 formContainer.style.display = 'block';
             } else {
                 formContainer.style.display = 'none';
+                document.getElementById('emailFields').style.display = 'none';
+                document.getElementById('matriculaFields').style.display = 'none';
             }
         });
 
@@ -261,4 +303,5 @@
         }
     </script>
 </body>
+
 </html>

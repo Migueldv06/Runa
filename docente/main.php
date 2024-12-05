@@ -6,7 +6,7 @@ include "../config.php";   // Inclui a conexão com o banco de dados
 $id = $_SESSION['id'];
 
 // Consulta as informações do discente
-$sqlDocente = "SELECT nome, email, matricula, curso, endereco FROM docente WHERE id = '$id'";
+$sqlDocente = "SELECT docente.nome AS nome_docente, docente.email, docente.matricula, curso.nome AS nome_curso, docente.endereco FROM docente INNER JOIN curso ON docente.curso = curso.id WHERE docente.id = '$id'";
 $resultDocente = $DB->query($sqlDocente) or die("Falha na execução do MySQL: " . $DB->error);
 
 // Verifica se o usuário foi encontrado
@@ -335,7 +335,8 @@ $resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->
         <div class="left-column">
             <div class="ppc">
                 <h2>Projeto Pedagógico do Curso (PPC)</h2>
-                <p>O Projeto Pedagógico do Curso (PPC) é um documento importante que define a estrutura do curso, incluindo objetivos, disciplinas e outras informações relevantes.</p>
+                <p>O Projeto Pedagógico do Curso (PPC) é um documento importante que define a estrutura do curso,
+                    incluindo objetivos, disciplinas e outras informações relevantes.</p>
                 <a href="docs/ppc-regente.pdf" download>Baixar Documento PPC</a>
                 <button>Alterar PPC</button>
             </div>
@@ -371,12 +372,17 @@ $resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->
 
             <!-- Ações Rápidas -->
             <div class="actions-area">
-                <h2>Ações</h2>
-                <a href="cria-turma.php">Adicionar categorias de Atividades Complementares</a>
+                <h2>Ações em Atividades</h2>
                 <a href="valida-atividades.php">Validar Atividades Complementares</a>
-                <a href="edita-turma.php">Editar Turma</a>
+                <a href="cria-turma.php">Adicionar categorias de Atividades Complementares</a>
+            </div>
+            <div class="actions-area">
+                <h2>Ações em Turmas e Cursos</h2>
                 <a href="cria-turma.php">Adicionar uma Turma</a>
+                <a href="edita-turma.php">Editar Turma</a>
                 <button>Arquivar Turma</button>
+                <a href="cria-curso.php">Adicionar um Curso</a>
+                <a href="edita-curso.php">Editar Curso</a>
             </div>
         </div>
 
@@ -384,10 +390,10 @@ $resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->
         <div class="right-column">
             <div class="user-info">
                 <h2>Dados Pessoais</h2>
-                <p><strong>Nome:</strong> <?php echo $docente['nome']; ?></p>
+                <p><strong>Nome:</strong> <?php echo $docente['nome_docente']; ?></p>
                 <p><strong>Email:</strong> <?php echo $docente['email']; ?></p>
                 <p><strong>Endereço:</strong> <?php echo $docente['endereco']; ?></p>
-                <p><strong>Curso:</strong> <?php echo $docente['curso']; ?></p>
+                <p><strong>Curso:</strong> <?php echo $docente['nome_curso']; ?></p>
                 <p><strong>Número de Matrícula:</strong> <?php echo $docente['matricula']; ?></p>
                 <a href="editar-dados.php" class="edit-link">Visualizar, Adicionar e/ou Editar Dados Pessoais</a>
             </div>
@@ -395,7 +401,9 @@ $resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->
             <!-- Contato com a Coordenação -->
             <div class="contact-info">
                 <h2>Contato com a Coordenação</h2>
-                <p>Para qualquer dúvida ou informação adicional, entre em contato com a coordenação pelo e-mail <a href="mailto:coordenacao@institutofederal.edu.br">coordenacao@institutofederal.edu.br</a> ou pelo telefone (11) 1234-5678.</p>
+                <p>Para qualquer dúvida ou informação adicional, entre em contato com a coordenação pelo e-mail <a
+                        href="mailto:coordenacao@institutofederal.edu.br">coordenacao@institutofederal.edu.br</a> ou
+                    pelo telefone (11) 1234-5678.</p>
             </div>
         </div>
     </div>
