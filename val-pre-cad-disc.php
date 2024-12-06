@@ -92,8 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 20px;
             max-width: 600px;
             margin: 0 auto;
-            display: none;
-            /* Initially hidden */
         }
 
         .form-container h1 {
@@ -177,63 +175,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="title">Sistema de Registro Unificado de Normativas de Atividades Suplementares - RUNAS</div>
     </header>
 
-    <div class="container">
-
-        <label for="validationSelect">Escolha o método de validação:</label>
-        <div class="negocio">
-            <select id="validationSelect">
+    <div class="form-container">
+        <h1>Validar Pré-Cadastro Discente</h1>
+        <form id="validarPreCadastroForm" method="post">
+            <label for="validationSelect">Escolha o método de validação:</label>
+            <select id="validationSelect" name="validationSelect" required>
                 <option value="">Selecione um método</option>
                 <option value="matricula">Número de Matrícula e CPF</option>
                 <option value="email">Email e CPF</option>
             </select>
-        </div>
-        <div id="formContainer" class="form-container">
-            <h1>Validar Pré-Cadastro Discente</h1>
-            <form id="validarPreCadastroForm" onsubmit="return validateForm()" method="post">
-                <input type="hidden" name="validationSelect" id="hiddenValidationSelect" value="">
-                <div id="matriculaFields" style="display: none;">
-                    <label for="matricula">Número de Matrícula:</label>
-                    <input type="number" id="matricula" name="matricula" placeholder="Número de Matrícula">
-                    <span class="error" id="matriculaError"></span>
 
-                    <label for="cpf">Número de CPF:</label>
-                    <input type="text" id="cpf" name="cpf" placeholder="Número de CPF" required>
-                    <span class="error" id="cpfError"></span>
-                </div>
+            <!-- Campos de Matrícula -->
+            <div id="matriculaFields" style="display: none;">
+                <label for="matricula">Número de Matrícula:</label>
+                <input type="number" id="matricula" name="matricula" placeholder="Número de Matrícula">
 
-                <div id="emailFields" style="display: none;">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" placeholder="Email">
-                    <span class="error" id="emailError"></span>
+                <label for="cpf">Número de CPF:</label>
+                <input type="text" id="cpf" name="cpf" placeholder="Número de CPF">
+            </div>
 
-                    <label for="cpfEmail">Número de CPF:</label>
-                    <input type="text" id="cpfEmail" name="cpfEmail" placeholder="Número de CPF" required>
-                    <span class="error" id="cpfErrorEmail"></span>
-                </div>
+            <!-- Campos de Email -->
+            <div id="emailFields" style="display: none;">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Email">
 
-                <button type="submit">Validar</button>
-            </form>
-        </div>
+                <label for="cpfEmail">Número de CPF:</label>
+                <input type="text" id="cpfEmail" name="cpfEmail" placeholder="Número de CPF">
+            </div>
+
+            <button id="botaoEnviar" type="submit" style="display: none;">Validar</button>
+        </form>
     </div>
 
     <script>
-        document.getElementById('validationSelect').addEventListener('change', function () {
-            const formContainer = document.getElementById('formContainer');
+        const validationSelect = document.getElementById('validationSelect');
+        const matriculaFields = document.getElementById('matriculaFields');
+        const emailFields = document.getElementById('emailFields');
+        const botaoEnviar = document.getElementById('botaoEnviar');
+
+        validationSelect.addEventListener('change', function () {
             const selectedValue = this.value;
-            document.getElementById('hiddenValidationSelect').value = selectedValue;
 
             if (selectedValue === 'matricula') {
-                document.getElementById('matriculaFields').style.display = 'block';
-                document.getElementById('emailFields').style.display = 'none';
-                formContainer.style.display = 'block';
+                matriculaFields.style.display = 'block';
+                botaoEnviar.style.display = 'block';
+                emailFields.style.display = 'none';
             } else if (selectedValue === 'email') {
-                document.getElementById('matriculaFields').style.display = 'none';
-                document.getElementById('emailFields').style.display = 'block';
-                formContainer.style.display = 'block';
+                matriculaFields.style.display = 'none';
+                botaoEnviar.style.display = 'block';
+                emailFields.style.display = 'block';
             } else {
-                formContainer.style.display = 'none';
-                document.getElementById('emailFields').style.display = 'none';
-                document.getElementById('matriculaFields').style.display = 'none';
+                matriculaFields.style.display = 'none';
+                emailFields.style.display = 'none';
             }
         });
 

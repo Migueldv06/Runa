@@ -1,4 +1,18 @@
 <?php
+include "config.php";
+
+if ($_SERVER['REQUEST_METHOD'] === "POST"){
+    $nome = "";
+    $matricula = "";
+    $cpf = "";
+    $email = "";
+    $endereco = "";
+    $turno = "";
+    $turma = "";
+    $telefone = "";
+    $senha = "";
+    $confSenha = "";
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -121,7 +135,7 @@
 
 <body>
     <header class="header">
-        <a href="../index.php"><img src="../img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
+        <a href="/index.php"><img src="/img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
         <div class="title">Sistema de Registro Unificado de Normativas de Atividades Suplementares - RUNAS</div>
     </header>
 
@@ -160,6 +174,14 @@
                 <label for="telefone">Número de Telefone (Opcional):</label>
                 <input type="tel" id="telefone" name="telefone" placeholder="Número de Telefone" value="<?php echo $usuario['telefone'] ?>">
                 <span class="error" id="telefoneError"></span>
+
+                <label for="senha">Senha:</label>
+                <input type="senha" id="senha" name="senha" placeholder="senha">
+                <span class="error" id="senhaError"></span>
+
+                <label for="confSenha">Repita a Senha:</label>
+                <input type="confSenha" id="confSenha" name="confSenha" placeholder="repita a senha">
+                <span class="error" id="confSenhaError"></span>
 
                 <button type="submit">Submeter</button>
             </form>
