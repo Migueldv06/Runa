@@ -12,7 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = "SELECT * FROM discente WHERE matricula = '$matricula' AND cpf = '$cpf' AND status = '0'";
         $result = $DB->query($query) or die("Erro na consulta ao banco: " . $DB->error);
         if ($result->num_rows > 0) {
-            echo "<script>alert('Pré-cadastro encontrado! Por favor, complete as informações!'); window.location.href='complete-pre-cad-disc.php';</script>";
+            $pre_cad_disc = $result->fetch_assoc();
+            $id = $pre_cad_disc['id'];
+            echo "<script>alert('Pré-cadastro encontrado! Por favor, complete as informações!'); window.location.href='complete-pre-cad-disc.php?id=$id';</script>";
         } else {
             // Pré-cadastro não encontrado
             echo "<script>alert('Nenhum pré-cadastro encontrado!'); window.location.reload();</script>";
@@ -25,7 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $DB->query($query) or die("Erro na consulta ao banco: " . $DB->error);
 
         if ($result->num_rows > 0) {
-            echo "<script>alert('Pré-cadastro encontrado! Por favor, complete as informações!'); window.location.href='complete-pre-cad-disc.php';</script>";
+            $pre_cad_disc = $result->fetch_assoc();
+            $id = $pre_cad_disc['id'];
+            echo "<script>alert('Pré-cadastro encontrado! Por favor, complete as informações!'); window.location.href='complete-pre-cad-disc.php?id=$id';</script>";
         } else {
             echo "<script>alert('Nenhum pré-cadastro encontrado!'); window.location.reload();</script>";
         }
