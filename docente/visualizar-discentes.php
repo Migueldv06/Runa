@@ -11,23 +11,6 @@ if ($resultDiscente->num_rows <= 0) {
     echo "Atividades no Sistema.";
     exit();
 }
-function StatusAtividade($atividade_status)
-{
-    switch ($atividade_status) {
-        case 1:
-            $result = "Pendente";
-            return $result;
-        case 2:
-            $result = "Validada";
-            return $result;
-        case 3:
-            $result = "Invalidada";
-            return $result;
-        default:
-            $result = "";
-            return $result;
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -50,11 +33,13 @@ function StatusAtividade($atividade_status)
         <h2>Discentes</h2>
         <ul>
             <?php
-            while ($discente = $resultDiscente->fetch_assoc()) {;
+            while ($discente = $resultDiscente->fetch_assoc()) {
                 echo "<li>
                         <span>ID: {$discente['id']}</span>
                         {$discente['nome']} - " . "
-                        <a href='alterar-discente.php?id={$discente['id']}' style='color: #00796b; font-weight: bold; text-decoration: none;'>Alterar</a>
+                        <a href='visualizar-discente.php?id={$discente['id']}' style='color: #00796b; font-weight: bold; text-decoration: none;'>Visualizar</a>
+                        <a href='editar-discente.php?id={$discente['id']}' style='color: #00796b; font-weight: bold; text-decoration: none;'>Editar</a>
+                        <a href='excluir-discente.php?id={$discente['id']}' style='color: #00796b; font-weight: bold; text-decoration: none;'>Excluir</a>
                       </li>";
             }
             ?>

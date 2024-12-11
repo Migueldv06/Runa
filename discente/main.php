@@ -7,11 +7,11 @@ $id = $_SESSION['id'];
 
 // Consulta as informações do discente
 $sqlDiscente = "SELECT nome, email, matricula, turma, turno, endereco FROM discente WHERE id = '$id'";
-$resultDiscenteDiscente = $DB->query($sqlDiscente) or die("Falha na execução do MySQL: " . $DB->error);
+$resultDiscente = $DB->query($sqlDiscente) or die("Falha na execução do MySQL: " . $DB->error);
 
 // Verifica se o usuário foi encontrado
-if ($resultDiscenteDiscente->num_rows >= 0) {
-    $discente = $resultDiscenteDiscente->fetch_assoc();  // Armazena os dados do usuário em um array
+if ($resultDiscente->num_rows >= 0) {
+    $discente = $resultDiscente->fetch_assoc();  // Armazena os dados do usuário em um array
     list($primeiro_nome, $sobre_nome) = explode(" ", $discente["nome"],2);
 } else {
     echo "Usuário não encontrado.";

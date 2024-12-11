@@ -28,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['turma_id'])) {
     exit();
 }
 
-// Carregar dados da turma via AJAX
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['turma_id'])) {
     $turma_id = intval($_GET['turma_id']);
 

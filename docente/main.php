@@ -54,9 +54,7 @@ $resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->
             <div class="ppc">
                 <h2>Gerenciamento de Docentes</h2>
                 <a onclick="window.location.href='pre-cadastro-discente.php';">Adicionar Novo Discente</a>
-                <a onclick="window.location.href='alterar-discentes.php';">Alterar Dados de Discente</a>
-                <a onclick="window.location.href='excluir-discente.php';">Excluir Discente</a>
-                <a onclick="window.location.href='visualizar-discentes.php';">Visualizar Discentes</a>
+                <a onclick="window.location.href='visualizar-discentes.php';">Visualizar/Editar/Excluir Discentes</a>
             </div>
         </div>
 
@@ -69,7 +67,7 @@ $resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->
                     <?php if ($resultTurmas->num_rows > 0): ?>
                         <?php while ($turma = $resultTurmas->fetch_assoc()): ?>
                             <li>
-                                <a href="visualizar-turma.php?id=<?php echo $turma['id']; ?>">
+                                <a href="edita-turma.php?id=<?php echo $turma['id']; ?>">
                                     <?php echo $turma['turma_nome'] . " - " . $turma['curso_nome']; ?>
                                 </a>
                             </li>
