@@ -25,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['turma_id'])) {
     } else {
         echo "<script>alert('Erro na atualização da turma.');</script>";
     }
-    exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['turma_id'])) {
@@ -180,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['turma_id'])) {
                 <div id="campos" style="display: none;">
                     <label for="nome">Nome da Turma:</label>
                     <input type="text" id="nome" name="nome" placeholder="Nome" required>
-                    
+
                     <label for="cursos">Curso:</label>
                     <select id="cursos" name="curso" required>
                         <option value="">Selecione um Curso</option>

@@ -37,8 +37,8 @@ if ($resultDiscente->num_rows <= 0) {
                 echo "<li>
                         <span>ID: {$discente['id']}</span>
                         {$discente['nome']} - " . "
-                        <a href='visualizar-discente.php?id={$discente['id']}' style='color: #00796b; font-weight: bold; text-decoration: none;'>Visualizar</a>
-                        <a href='editar-discente.php?id={$discente['id']}' style='color: #00796b; font-weight: bold; text-decoration: none;'>Editar</a>
+                        <a href='visualizar-discente.php?id={$discente['id']}' style='color: #00796b; font-weight: bold; text-decoration: none;'>Visualizar</a> - 
+                        <a href='editar-discente.php?id={$discente['id']}' style='color: #00796b; font-weight: bold; text-decoration: none;'>Editar</a> - 
                         <a href='excluir-discente.php?id={$discente['id']}' style='color: #00796b; font-weight: bold; text-decoration: none;'>Excluir</a>
                       </li>";
             }
