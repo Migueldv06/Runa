@@ -67,7 +67,7 @@ $resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->
                     <?php if ($resultTurmas->num_rows > 0): ?>
                         <?php while ($turma = $resultTurmas->fetch_assoc()): ?>
                             <li>
-                                <a href="edita-turma.php?id=<?php echo $turma['id']; ?>">
+                                <a href="edita-turma.php?edita_turma_id=<?php echo $turma['id']; ?>">
                                     <?php echo $turma['turma_nome'] . " - " . $turma['curso_nome']; ?>
                                 </a>
                             </li>

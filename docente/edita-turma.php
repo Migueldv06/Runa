@@ -62,99 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['turma_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Turma - SiVAC</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #f0f4f8;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .header {
-            background: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 80px;
-            z-index: 1000;
-        }
-
-        .logo {
-            width: 60px;
-        }
-
-        .title {
-            font-size: 24px;
-            color: #00796b;
-            margin-left: 20px;
-        }
-
-        .container {
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-            margin: 20px;
-        }
-
-        .form-container {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .form-container h1 {
-            color: #00796b;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        .form-container label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .form-container input[type="text"],
-        .form-container select {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .submit-button {
-            background: #00796b;
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            padding: 15px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-
-        .submit-button:hover {
-            background-color: #004b49;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <link rel="stylesheet" href="styles/edita-turma.css">
 </head>
 
 <body>
@@ -199,6 +107,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['turma_id'])) {
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const editaTurmaId = urlParams.get('edita_turma_id');
+
+            if (editaTurmaId) {
+                // Define a turma selecionada no dropdown
+                const turmasDropdown = document.getElementById("turmas");
+                turmasDropdown.value = editaTurmaId;
+
+                // Chama a função carregaturma para preencher os campos
+                carregaturma(editaTurmaId);
+            }
+        });
         function carregaturma(turma_id) {
             if (turma_id) {
                 fetch("?turma_id=" + turma_id)
