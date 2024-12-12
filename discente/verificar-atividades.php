@@ -11,7 +11,6 @@ $sql_atividades = "SELECT id, nome, caminho_arquivo, categoria, horas_atividade,
                            WHERE discente_id = '$id' 
                            ORDER BY data_upload DESC";
 $resultAtividades = $DB->query($sql_atividades);
-
 function StatusAtividade($atividade_status)
 {
     switch ($atividade_status) {
