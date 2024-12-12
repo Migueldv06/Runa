@@ -6,6 +6,9 @@ $id = $_SESSION['id'];
 $sql = "SELECT * FROM discente WHERE id='$id'";
 $result = $DB->query($sql) or die("Falha na execução do MySQL: " . $DB->error);
 
+$sqlTurmas = "SELECT * FROM turma";
+$resultTurmas = $DB->query($sqlTurmas) or die("Falha na execução do MySQL: " . $DB->error);
+
 // Verifica se o usuário foi encontrado
 if ($result->num_rows > 0) {
     $usuario = $result->fetch_assoc();  // Armazena os dados do usuário em um array
@@ -31,11 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sissssssi", $nome, $matricula, $cpf, $email, $endereco, $turno, $turma, $telefone, $id);
 
     if ($stmt->execute()) {
-        echo "<p>Dados atualizados com sucesso!</p>";
-        // Atualiza os dados exibidos sem recarregar a página
-        header("Refresh:0");
+        echo "<script>alert('Dados Atualizados com sucesso!'); window.location.href='main.php';</script>";
     } else {
-        echo "<p>Erro ao atualizar os dados.</p>";
+        echo "<script>alert('Erro na Atualização de dados!'); window.location.href='main.php';</script>";
     }
 }
 ?>
@@ -46,116 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Cadastro do Discente - SiVAC</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #f0f4f8;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .header {
-            background: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 80px;
-            z-index: 1000;
-        }
-
-        .logo {
-            width: 60px;
-        }
-
-        .title {
-            font-size: 24px;
-            color: #00796b;
-            margin-left: 20px;
-        }
-
-        .container {
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-            margin: 20px;
-        }
-
-        .form-container {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .form-container h1 {
-            color: #00796b;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        .form-container label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .form-container input[type="text"],
-        .form-container input[type="email"],
-        .form-container input[type="endereco"],
-        .form-container input[type="turno"],
-        .form-container input[type="turma"],
-        .form-container input[type="tel"],
-        .form-container input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .form-container button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            background-color: #00796b;
-            color: #ffffff;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .form-container button:hover {
-            background-color: #004d40;
-        }
-
-        .form-container .optional {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .form-container .error {
-            color: red;
-            font-size: 14px;
-            margin-top: -10px;
-            margin-bottom: 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles/editar-dados.css">
 </head>
 
 <body>
@@ -167,102 +59,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <div class="form-container">
             <h1>Editar Cadastro do Discente</h1>
-            <form id="preCadastroForm" onsubmit="return validateForm()" method="post">
+            <form id="preCadastroForm" method="post">
                 <label for="nome">Nome Completo:</label>
-                <input type="text" id="nome" name="nome" placeholder="Nome Completo" value="<?php echo $usuario['nome'] ?>" required>
+                <input type="text" id="nome" name="nome" placeholder="Nome Completo"
+                    value="<?php echo $usuario['nome'] ?>" required>
                 <span class="error" id="nomeError"></span>
 
                 <label for="matricula">Número de Matrícula:</label>
-                <input type="number" id="matricula" name="matricula" placeholder="Número de Matrícula" value="<?php echo $usuario['matricula'] ?>" required>
+                <input type="number" id="matricula" name="matricula" placeholder="Número de Matrícula"
+                    value="<?php echo $usuario['matricula'] ?>" required>
                 <span class="error" id="matriculaError"></span>
 
                 <label for="cpf">Número de CPF:</label>
-                <input type="text" id="cpf" name="cpf" placeholder="Número de CPF" value="<?php echo $usuario['cpf'] ?>" required>
+                <input type="number" id="cpf" name="cpf" placeholder="Número de CPF"
+                    value="<?php echo $usuario['cpf'] ?>" required>
                 <span class="error" id="cpfError"></span>
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Email" value="<?php echo $usuario['email'] ?>" required>
+                <input type="text" id="email" name="email" placeholder="Email" value="<?php echo $usuario['email'] ?>"
+                    required>
                 <span class="error" id="emailError"></span>
 
                 <label for="endereco">Endereço:</label>
-                <input type="endereco" id="endereco" name="endereco" placeholder="Endereço" value="<?php echo $usuario['endereco'] ?>">
+                <input type="text" id="endereco" name="endereco" placeholder="Endereço"
+                    value="<?php echo $usuario['endereco'] ?>">
                 <span class="error" id="enderecoError"></span>
 
                 <label for="turno">Turno:</label>
-                <input type="turno" id="turno" name="turno" placeholder="Turno" value="<?php echo $usuario['turno'] ?>">
+                <input type="text" id="turno" name="turno" placeholder="Turno" value="<?php echo $usuario['turno'] ?>">
                 <span class="error" id="turnoError"></span>
 
                 <label for="turma">Turma:</label>
-                <input type="turma" id="turma" name="turma" placeholder="Turma" value="<?php echo $usuario['turma'] ?>">
+                <select type="select" id="turma" name="turma" required>
+                    <option value="">Selecione uma Turma</option>
+                    <?php
+                    while ($row = $resultTurmas->fetch_assoc()) {
+                        if ($row['id'] == $usuario['turma']) {
+                            echo '<option value="' . $row["id"] . '" selected>' . $row["nome"] . '</option>';
+                        } else {
+                            echo '<option value="' . $row["id"] . '">' . $row["nome"] . '</option>';
+                        }
+                    }
+                    ?>
+                </select>
                 <span class="error" id="turmaError"></span>
 
                 <label for="telefone">Número de Telefone (Opcional):</label>
-                <input type="tel" id="telefone" name="telefone" placeholder="Número de Telefone" value="<?php echo $usuario['telefone'] ?>">
+                <input type="number" id="telefone" name="telefone" placeholder="Número de Telefone"
+                    value="<?php echo $usuario['telefone'] ?>">
                 <span class="error" id="telefoneError"></span>
 
-                <button type="submit">Submeter</button>
+                <button type="submit" class="submit-button">Enviar</button>
+                <a class="submit-button" href="main.php">Voltar</a>
             </form>
         </div>
     </div>
-
-    <script>
-        function validateForm() {
-            let valid = true;
-
-            // Clear previous errors
-            document.querySelectorAll('.error').forEach(e => e.textContent = '');
-
-            // Nome
-            const nome = document.getElementById('nome').value.trim();
-            if (nome === '') {
-                document.getElementById('nomeError').textContent = 'O nome completo é obrigatório.';
-                valid = false;
-            }
-
-            // Matrícula
-            const matricula = document.getElementById('matricula').value.trim();
-            if (matricula === '') {
-                document.getElementById('matriculaError').textContent = 'O número de matrícula é obrigatório.';
-                valid = false;
-            }
-
-            // CPF
-            const cpf = document.getElementById('cpf').value.trim();
-            if (cpf === '') {
-                document.getElementById('cpfError').textContent = 'O número de CPF é obrigatório.';
-                valid = false;
-            }
-
-            // Email
-            const email = document.getElementById('email').value.trim();
-            if (email === '') {
-                document.getElementById('emailError').textContent = 'O email é obrigatório.';
-                valid = false;
-            } else if (!validateEmail(email)) {
-                document.getElementById('emailError').textContent = 'O email fornecido não é válido.';
-                valid = false;
-            }
-
-            // Telefone (opcional)
-            const telefone = document.getElementById('telefone').value.trim();
-            if (telefone !== '' && !validatePhone(telefone)) {
-                document.getElementById('telefoneError').textContent = 'O número de telefone fornecido não é válido.';
-                valid = false;
-            }
-
-            return valid;
-        }
-
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-        function validatePhone(phone) {
-            const re = /^\d{10,11}$/; // Exemplo de validação para números de telefone (10 ou 11 dígitos)
-            return re.test(phone);
-        }
-    </script>
 </body>
 
 </html>

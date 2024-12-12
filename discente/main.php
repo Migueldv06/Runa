@@ -108,10 +108,6 @@ $progresso = min(100, ($horas_discente / $meta_horas) * 100); // Limita o progre
                 </div>
             </div>
 
-            <div class="welcome-message">
-                <a href="enviar-atividades.php" class="download-button">Enviar Atividades Complementares</a>
-            </div>
-
             <!-- Uploads Recentes -->
             <div class="uploads-recentes">
                 <h2>Uploads Recentes</h2>
