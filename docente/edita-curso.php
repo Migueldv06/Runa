@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['curso_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Turma - SiVAC</title>
+    <title>Editar Curso - SiVAC</title>
     <link rel="stylesheet" href="styles/edita-curso.css">
 </head>
 
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['curso_id'])) {
 
     <div class="container">
         <div class="form-container">
-            <h1>Editar Turma</h1>
+            <h1>Editar Curso</h1>
             <form id="EditaTurmaForm" method="post">
                 <select id="cursos" name="cursos" onchange="carregacurso(this.value)" required>
                     <option value="">Selecione um curso</option>

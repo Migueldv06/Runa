@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="container">
         <div class="form-container">
-            <h1>Criar Turma</h1>
+            <h1>Criar Curso</h1>
             <form id="preCadastroForm" method="post">
                 <label for="nome">Nome da Turma:</label>
                 <input type="text" id="nome" name="nome" placeholder="Nome" required>
@@ -47,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" id="horas_necessarias" name="horas_necessarias" placeholder="horas_necessarias" required>
                 <span class="error" id="horas_necessariasError"></span>
 
-                <button type="submit">Submeter</button>
-                <a href="main.php">Voltar</a>
+                <button type="submit" class="submit-button">Enviar</button>
+                <a class="submit-button" href="main.php">Voltar</a>
             </form>
         </div>
     </div>

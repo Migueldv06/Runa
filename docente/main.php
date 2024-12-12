@@ -47,7 +47,7 @@ $resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->
                 <h2>Projeto Pedagógico do Curso (PPC)</h2>
                 <p>O Projeto Pedagógico do Curso (PPC) é um documento importante que define a estrutura do curso,
                     incluindo objetivos, disciplinas e outras informações relevantes.</p>
-                <a href="docs/ppc-regente.pdf" download>Baixar Documento PPC</a>
+                <a href="ppc-regente.php">Baixar Documento PPC</a>
                 <button>Alterar PPC</button>
             </div>
 

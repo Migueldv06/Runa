@@ -94,7 +94,7 @@
     </style>
 </head>
 <body>
-    <a href="index.php"><img src="img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
+    <a href="../index.php"><img src="../img/Runa-noname.png" alt="Logo Runas" class="logo"></a>
     <div class="container">
         <div class="box">
             <h1>PPC Vigente</h1>

@@ -62,7 +62,8 @@ body {
     font-weight: bold;
 }
 
-.form-container input[type="text"] {
+.form-container input[type="nome"],
+.form-container select[id="curso"] {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;

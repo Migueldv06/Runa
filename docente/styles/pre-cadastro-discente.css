@@ -62,7 +62,9 @@ body {
     font-weight: bold;
 }
 
-.form-container input[type="text"] {
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container select[id="turma"] {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
