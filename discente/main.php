@@ -6,13 +6,13 @@ include "../config.php";   // Inclui a conexão com o banco de dados
 $id = $_SESSION['id'];
 
 // Consulta as informações do discente
-$sqlDiscente = "SELECT nome, email, matricula, turma, turno, endereco FROM discente WHERE id = '$id'";
+$sqlDiscente = "SELECT discente.nome AS nome_discente, discente.email, discente.matricula, discente.turma, turma.nome AS nome_turma, discente.turno, discente.endereco FROM discente INNER JOIN turma ON discente.turma = turma.id WHERE discente.id = '$id'";
 $resultDiscente = $DB->query($sqlDiscente) or die("Falha na execução do MySQL: " . $DB->error);
 
 // Verifica se o usuário foi encontrado
 if ($resultDiscente->num_rows >= 0) {
     $discente = $resultDiscente->fetch_assoc();  // Armazena os dados do usuário em um array
-    list($primeiro_nome, $sobre_nome) = explode(" ", $discente["nome"],2);
+    list($primeiro_nome, $sobre_nome) = explode(" ", $discente["nome_discente"], 2);
 } else {
     echo "Usuário não encontrado.";
     exit();
@@ -38,6 +38,7 @@ if ($resultTotalHoras && $row = $resultTotalHoras->fetch_assoc()) {
 }
 
 $turma_id = $discente['turma'];
+
 // Consulta para obter o curso relacionado à turma
 $sql_turma = "SELECT curso FROM turma WHERE id = $turma_id";
 $resultTurma = $DB->query($sql_turma) or die("Falha na execução do MySQL: " . $DB->error);
@@ -68,252 +69,7 @@ $progresso = min(100, ($horas_discente / $meta_horas) * 100); // Limita o progre
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Controle - SiVAC</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #f0f4f8;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            color: #333;
-            position: relative;
-        }
-
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 1000;
-            height: 80px;
-        }
-
-        .logo {
-            width: 60px;
-        }
-
-        .title {
-            font-size: 24px;
-            color: #00796b;
-            margin-left: 20px;
-        }
-
-        .logout-button {
-            background: #00796b;
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 24px;
-            font-size: 16px;
-            text-decoration: none;
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-
-        .logout-button:hover {
-            background-color: #004b49;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .container {
-            display: flex;
-            flex: 1;
-            margin-top: 80px;
-            /* Espaço para o cabeçalho fixo */
-            padding: 20px;
-        }
-
-        .left-column,
-        .right-column {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .left-column {
-            margin-right: 20px;
-        }
-
-        .right-column {
-            margin-left: 20px;
-        }
-
-        .center-column {
-            flex: 2;
-        }
-
-        .user-info,
-        .ppc {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-
-        .user-info img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-        }
-
-        .user-info h2 {
-            margin-bottom: 10px;
-            color: #00796b;
-            font-size: 24px;
-        }
-
-        .user-info p {
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-
-        .user-info .edit-link {
-            display: inline-block;
-            margin-top: 10px;
-            color: #00796b;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .user-info .edit-link:hover {
-            text-decoration: underline;
-        }
-
-        .uploads-recentes,
-        .verificacao,
-        .contact-info {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .uploads-recentes h2,
-        .verificacao h2,
-        .contact-info h2 {
-            color: #00796b;
-            margin-bottom: 15px;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .uploads-recentes ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .uploads-recentes li {
-            background: #e0f2f1;
-            border: 1px solid #b2dfdb;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            padding: 10px;
-        }
-
-        .uploads-recentes li span {
-            display: block;
-            color: #00796b;
-            font-weight: bold;
-        }
-
-        .verificacao p {
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .progress-container {
-            background: #e0f2f1;
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 10px 0;
-            padding: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .progress-bar {
-            height: 30px;
-            /* Barra mais quadrada */
-            background: #00796b;
-            width: 60%;
-            /* Exemplo de progresso, pode ser ajustado dinamicamente */
-            transition: width 0.3s;
-            position: relative;
-            border-radius: 4px;
-            /* Bordas levemente arredondadas */
-        }
-
-        .progress-info {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .progress-details {
-            text-align: center;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-
-        .download-button {
-            display: inline-block;
-            background: #00796b;
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 24px;
-            font-size: 16px;
-            text-decoration: none;
-            text-align: center;
-            margin-top: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-
-        .download-button:hover {
-            background-color: #004b49;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .welcome-message {
-            text-align: center;
-            margin: 20px 0;
-            font-size: 20px;
-            font-weight: bold;
-            color: #00796b;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .left-column,
-            .right-column {
-                margin: 0;
-                margin-bottom: 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
@@ -331,7 +87,7 @@ $progresso = min(100, ($horas_discente / $meta_horas) * 100); // Limita o progre
                     incluindo objetivos, disciplinas e outras informações relevantes.</p>
                 <p>Para visualizar o PPC atual, consulte o documento disponibilizado.</p>
                 <p>Se precisar fazer alterações ou enviar novos documentos, entre em contato com a coordenação.</p>
-                <a href="docs/ppc-regente.pdf" class="download-button" download>Baixar Documento PPC</a>
+                <a href="ppc-regente.php" class="download-button">Baixar Documento PPC</a>
             </div>
         </div>
 
@@ -384,7 +140,8 @@ $progresso = min(100, ($horas_discente / $meta_horas) * 100); // Limita o progre
             <!-- Verificação de Atividades -->
             <div class="verificacao">
                 <h2>Verificar Andamento de Avaliação de Atividades Complementares</h2>
-                <p>Confira o status das suas atividades complementares e acompanhe o andamento da validação por <a href="verificar-atividades.php">aqui</a></p>
+                <p>Confira o status das suas atividades complementares e acompanhe o andamento da validação por <a
+                        href="verificar-atividades.php">aqui</a></p>
                 <!-- Adicione informações ou links para verificar o andamento -->
             </div>
             <!-- Contato com a Coordenação -->
@@ -400,10 +157,10 @@ $progresso = min(100, ($horas_discente / $meta_horas) * 100); // Limita o progre
         <div class="right-column">
             <div class="user-info">
                 <h2>Dados Pessoais</h2>
-                <p><strong>Nome:</strong> <?php echo $discente['nome']; ?></p>
+                <p><strong>Nome:</strong> <?php echo $discente['nome_discente']; ?></p>
                 <p><strong>Email:</strong> <?php echo $discente['email']; ?></p>
                 <p><strong>Endereço:</strong> <?php echo $discente['endereco']; ?></p>
-                <p><strong>Turma:</strong> <?php echo $discente['turma']; ?></p>
+                <p><strong>Turma:</strong> <?php echo $discente['nome_turma']; ?></p>
                 <p><strong>Turno:</strong> <?php echo $discente['turno']; ?></p>
                 <p><strong>Número de Matrícula:</strong> <?php echo $discente['matricula']; ?></p>
                 <a href="editar-dados.php" class="edit-link">Visualizar, Adicionar e/ou Editar Dados Pessoais</a>
