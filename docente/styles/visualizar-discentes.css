@@ -50,6 +50,45 @@ body {
     margin: 0 auto;
 }
 
+.progress-container {
+    background: #e0f2f1;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px 0;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px; /* Limita a largura máxima */
+}
+
+.progress-bar {
+    height: 30px;
+    /* Barra mais quadrada */
+    background: #00796b;
+    width: 60%;
+    /* Exemplo de progresso, pode ser ajustado dinamicamente */
+    transition: width 0.3s;
+    position: relative;
+    border-radius: 4px;
+    /* Bordas levemente arredondadas */
+}
+
+.progress-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.progress-details {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
 .form-container h1 {
     color: #00796b;
     font-size: 28px;

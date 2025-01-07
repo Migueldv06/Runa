@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['turma_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Turma - SiVAC</title>
+    <title>Editar Turma - RUNAS</title>
     <link rel="stylesheet" href="styles/edita-turma.css">
 </head>
 

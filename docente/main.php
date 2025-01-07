@@ -82,7 +82,7 @@ $resultTurmas = $DB->query($sqlTurmas) or die("Falha ao buscar turmas: " . $DB->
             <div class="actions-area">
                 <h2>Ações em Atividades</h2>
                 <a href="valida-atividades.php">Validar Atividades Complementares</a>
-                <a href="cria-turma.php">Adicionar categorias de Atividades Complementares</a>
+                <a href="main.php">Adicionar categorias de Atividades Complementares</a>
             </div>
             <div class="actions-area">
                 <h2>Ações em Turmas e Cursos</h2>

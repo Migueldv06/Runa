@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pré-Cadastro Docente - SiVAC</title>
+    <title>Pré-Cadastro Docente - RUNAS</title>
     <style>
         * {
             margin: 0;

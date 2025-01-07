@@ -22,7 +22,7 @@ if ($result->num_rows > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Controle - SiVAC</title>
+    <title>Painel de Controle - RUNAS</title>
     <style>
         * {
             margin: 0;

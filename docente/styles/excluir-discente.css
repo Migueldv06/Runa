@@ -50,6 +50,44 @@ body {
     margin: 0 auto;
 }
 
+.progress-container {
+    background: #e0f2f1;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px 0;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+    height: 30px;
+    /* Barra mais quadrada */
+    background: #00796b;
+    width: 60%;
+    /* Exemplo de progresso, pode ser ajustado dinamicamente */
+    transition: width 0.3s;
+    position: relative;
+    border-radius: 4px;
+    /* Bordas levemente arredondadas */
+}
+
+.progress-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.progress-details {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
 .form-container h1 {
     color: #00796b;
     font-size: 28px;
@@ -62,8 +100,13 @@ body {
     font-weight: bold;
 }
 
-.form-container input[type="nome"],
-.form-container select[id="curso"] {
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="endereco"],
+.form-container input[type="turno"],
+.form-container input[type="turma"],
+.form-container input[type="tel"],
+.form-container input[type="number"] {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
@@ -100,43 +143,4 @@ body {
     font-size: 14px;
     margin-top: -10px;
     margin-bottom: 15px;
-}
-
-.uploads-recentes,
-.verificacao,
-.contact-info {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.uploads-recentes h2,
-.verificacao h2,
-.contact-info h2 {
-    color: #00796b;
-    margin-bottom: 15px;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.uploads-recentes ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.uploads-recentes li {
-    background: #e0f2f1;
-    border: 1px solid #b2dfdb;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    padding: 10px;
-}
-
-.uploads-recentes li span {
-    display: block;
-    color: #00796b;
-    font-weight: bold;
 }

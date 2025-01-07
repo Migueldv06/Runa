@@ -1,6 +1,6 @@
 <?php
 include "../config.php";
-include "protect-discente.php";
+include "protect-docente.php";
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = (int) $_GET['id'];
@@ -55,8 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Cadastro do Discente - SiVAC</title>
-    <link rel="stylesheet" href="styles/alterar-discente.css">
+    <title>Editar Cadastro do Discente - RUNAS</title>
+    <link rel="stylesheet" href="styles/editar-discente.css">
 </head>
 
 <body>

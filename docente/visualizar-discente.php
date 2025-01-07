@@ -66,8 +66,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizar Discente - SiVAC</title>
-    <link rel="stylesheet" href="styles/editar-discente.css">
+    <title>Visualizar Discente - RUNAS</title>
+    <link rel="stylesheet" href="styles/visualizar-discente.css">
 </head>
 
 <body>
